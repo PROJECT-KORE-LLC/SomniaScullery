@@ -1,1 +1,1552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="description" content="SOMNIASCULLERY // A private, offline-first digital kitchen and AI sous chef.">
+    <meta name="theme-color" content="#020204">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>SOMNIASCULLERY // COZY HEARTH ENGINE</title>
+    
+    <link rel="manifest" href="manifest.json">
 
+    <style>
+        /* ============================================================
+           SOMNIASCULLERY — COZY CHAOS ENVIRONMENT
+           Responsive • Soft • Expensive Glassmorphism • Hardware Accelerated
+           ============================================================ */
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        :root, html {
+            --glass: rgba(15, 20, 30, 0.45);
+            --text-muted: #b5b0bb;
+            
+            --bg-zoom: 1;
+            --bg-bright: 0.85;
+            --glow-opac: 0.3;
+            --anim-speed: 10s;
+
+            --primary: #e0e7ff; 
+            --primary-glow: rgba(224, 231, 255, 0.5);
+            --accent: #a5b4fc; 
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --text-main: #fdfbf7;
+
+            --particle-color: var(--primary);
+            --glow-color: var(--primary-glow);
+        }
+
+        /* 20 Color Palettes */
+        .lunar-mode { --primary: #e0e7ff; --accent: #a5b4fc; --primary-glow: rgba(224,231,255,0.4); --glass-border: rgba(255,255,255,0.15); --text-main: #fdfbf7; }
+        .noir-mode { --primary: #D4AF37; --accent: #f59e0b; --primary-glow: rgba(212,175,55,0.4); --glass-border: rgba(212,175,55,0.2); --text-main: #F4EBD0; }
+        .vellum-mode { --primary: #C2B280; --accent: #d97706; --primary-glow: rgba(194,178,128,0.4); --glass-border: rgba(194,178,128,0.2); --text-main: #fefce8; }
+        .amethyst-mode { --primary: #d8b4e2; --accent: #2dd4bf; --primary-glow: rgba(216,180,226,0.4); --glass-border: rgba(216,180,226,0.2); --text-main: #e9d5ff; }
+        .crimson-mode { --primary: #fb7185; --accent: #be123c; --primary-glow: rgba(251,113,133,0.4); --glass-border: rgba(251,113,133,0.2); --text-main: #fecaca; }
+        .emerald-mode { --primary: #34d399; --accent: #065f46; --primary-glow: rgba(52,211,153,0.4); --glass-border: rgba(52,211,153,0.2); --text-main: #d1fae5; }
+        .solar-mode { --primary: #fbbf24; --accent: #d97706; --primary-glow: rgba(251,191,36,0.4); --glass-border: rgba(251,191,36,0.2); --text-main: #fef3c7; }
+        .void-mode { --primary: #ec4899; --accent: #8b5cf6; --primary-glow: rgba(236,72,153,0.4); --glass-border: rgba(236,72,153,0.2); --text-main: #fbcfe8; }
+        .obsidian-mode { --primary: #9ca3af; --accent: #4b5563; --primary-glow: rgba(156,163,175,0.4); --glass-border: rgba(156,163,175,0.2); --text-main: #f3f4f6; }
+        .ghost-mode { --primary: #f8fafc; --accent: #cbd5e1; --primary-glow: rgba(248,250,252,0.4); --glass-border: rgba(248,250,252,0.2); --text-main: #ffffff; }
+        .gothic-mode { --primary: #881337; --accent: #4c0519; --primary-glow: rgba(136,19,55,0.4); --glass-border: rgba(136,19,55,0.2); --text-main: #e5e5e5; }
+        .library-mode { --primary: #78350f; --accent: #b45309; --primary-glow: rgba(120,53,15,0.4); --glass-border: rgba(120,53,15,0.2); --text-main: #fef3c7; }
+        .y2k-mode { --primary: #22d3ee; --accent: #e879f9; --primary-glow: rgba(34,211,238,0.4); --glass-border: rgba(232,121,249,0.2); --text-main: #cffafe; }
+        .vintage-mode { --primary: #57534e; --accent: #7f1d1d; --primary-glow: rgba(87,83,78,0.4); --glass-border: rgba(87,83,78,0.2); --text-main: #d6d3d1; }
+        .cyber-mode { --primary: #84cc16; --accent: #166534; --primary-glow: rgba(132,204,22,0.4); --glass-border: rgba(132,204,22,0.2); --text-main: #ecfccb; }
+        .twilight-mode { --primary: #312e81; --accent: #4c1d95; --primary-glow: rgba(49,46,129,0.4); --glass-border: rgba(49,46,129,0.2); --text-main: #e0e7ff; }
+        .autumn-mode { --primary: #ea580c; --accent: #9a3412; --primary-glow: rgba(234,88,12,0.4); --glass-border: rgba(234,88,12,0.2); --text-main: #ffedd5; }
+        .abyss-mode { --primary: #0891b2; --accent: #0f766e; --primary-glow: rgba(8,145,178,0.4); --glass-border: rgba(8,145,178,0.2); --text-main: #cffafe; }
+        .sepia-mode { --primary: #b45309; --accent: #78350f; --primary-glow: rgba(180,83,9,0.4); --glass-border: rgba(180,83,9,0.2); --text-main: #fef3c7; }
+        .frost-mode { --primary: #bae6fd; --accent: #38bdf8; --primary-glow: rgba(186,230,253,0.4); --glass-border: rgba(186,230,253,0.2); --text-main: #f0f9ff; }
+
+        body, html {
+            margin: 0; padding: 0; background: #050508;
+            overflow: hidden; font-family: 'Georgia', serif;
+            height: 100dvh; width: 100vw; color: var(--text-main);
+            -webkit-font-smoothing: antialiased; user-select: none;
+        }
+
+        input, textarea, select { user-select: auto; font-family: inherit; }
+
+        /* --- STUNNING BOOT SCREEN --- */
+        #boot-screen {
+            position: fixed; inset: 0; z-index: 9999;
+            background: rgba(10, 10, 15, 0.9); backdrop-filter: blur(40px);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 1.5s ease-in-out;
+        }
+        
+        .kore-orb {
+            position: absolute; width: 350px; height: 350px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            animation: orb-breathe 5s infinite alternate ease-in-out;
+            z-index: -1; pointer-events: none;
+            transform: translateZ(0);
+        }
+        @keyframes orb-breathe { 0% { transform: scale(0.8); opacity: 0.4; filter: hue-rotate(0deg); } 100% { transform: scale(1.3); opacity: 0.9; filter: hue-rotate(15deg); } }
+
+        .boot-content {
+            max-width: 90%; width: 650px; padding: 50px; text-align: center;
+            border: 1px solid var(--glass-border); border-radius: 40px;
+            background: rgba(255,255,255,0.03); box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+            position: relative; z-index: 10; backdrop-filter: blur(20px);
+        }
+        .boot-title {
+            color: var(--primary); font-size: clamp(1.8rem, 5vw, 2.8rem); letter-spacing: 12px; margin: 0 0 20px 0;
+            text-shadow: 0 0 30px var(--primary-glow); text-transform: uppercase; font-family: 'Times New Roman', serif;
+        }
+        .boot-disclaimer {
+            color: var(--text-main); font-size: 1.05rem; line-height: 1.8; letter-spacing: 1px;
+            margin-bottom: 35px; font-family: 'Georgia', serif; font-style: italic; opacity: 0.9;
+        }
+
+        /* --- VISUAL CANVAS --- */
+        #bg-anchor {
+            position: fixed; inset: 0; 
+            background: linear-gradient(135deg, #0f172a 0%, #000000 100%);
+            background-image: url('SomniaScullery.png'); 
+            background-size: cover; 
+            background-position: center center;
+            background-repeat: no-repeat;
+            z-index: 1; transform: scale(var(--bg-zoom)) translateZ(0);
+            filter: brightness(var(--bg-bright));
+            transition: background 1.5s ease, filter 0.5s ease, transform 0.5s ease;
+        }
+
+        #glow-layer {
+            position: fixed; inset: 0;
+            background: radial-gradient(circle at 50% 50%, var(--glow-color) 0%, transparent 70%);
+            z-index: 2; opacity: var(--glow-opac); pointer-events: none;
+            transition: opacity 0.5s ease, background 1.5s ease;
+            transform: translateZ(0);
+        }
+
+        /* 20 GLOWS */
+        .glow-pulse { animation: g-pulse var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-breathe { animation: g-breathe var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-strobe { animation: g-strobe var(--anim-speed) infinite alternate linear; }
+        .glow-phantom { animation: g-phantom var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-wave { animation: g-wave var(--anim-speed) infinite alternate linear; }
+        .glow-flicker { animation: g-flicker calc(var(--anim-speed) / 4) infinite alternate ease-in-out; }
+        .glow-aurora { background: linear-gradient(45deg, var(--primary-glow), transparent); animation: g-pulse var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-radar { background: conic-gradient(from 0deg, transparent, var(--primary-glow), transparent); animation: g-wave var(--anim-speed) infinite linear; }
+        .glow-static { animation: none; }
+        .glow-none { opacity: 0 !important; }
+        .glow-heartbeat { animation: g-heartbeat calc(var(--anim-speed) / 3) infinite alternate cubic-bezier(0.4, 0, 0.6, 1); }
+        .glow-shimmer { animation: g-shimmer calc(var(--anim-speed) / 2) infinite alternate linear; background: linear-gradient(135deg, transparent, var(--glow-color), transparent); }
+        .glow-glitch { animation: g-glitch calc(var(--anim-speed) / 5) infinite linear; }
+        .glow-scanner { background: linear-gradient(to bottom, transparent, var(--glow-color), transparent); animation: g-scanner var(--anim-speed) infinite linear; }
+        .glow-nebula { background: radial-gradient(ellipse at center, var(--glow-color) 0%, transparent 80%); animation: g-nebula var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-vortex { background: conic-gradient(from 180deg, var(--glow-color), transparent); animation: g-wave calc(var(--anim-speed) * 1.5) infinite linear reverse; }
+        .glow-ripple { animation: g-ripple var(--anim-speed) infinite ease-out; }
+        .glow-halo { background: radial-gradient(circle, transparent 40%, var(--glow-color) 60%, transparent 80%); animation: g-pulse var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-eclipse { background: radial-gradient(circle, #000 30%, var(--glow-color) 70%, transparent 100%); animation: g-breathe var(--anim-speed) infinite alternate ease-in-out; }
+        .glow-inferno { background: radial-gradient(circle at bottom, var(--glow-color) 0%, transparent 70%); animation: g-flicker calc(var(--anim-speed) / 3) infinite alternate ease-in-out; }
+
+        @keyframes g-pulse { 0% { transform: scale(1); opacity: calc(var(--glow-opac) * 0.5); } 100% { transform: scale(1.1); opacity: var(--glow-opac); } }
+        @keyframes g-breathe { 0%, 100% { filter: brightness(0.8); } 50% { filter: brightness(1.2); } }
+        @keyframes g-strobe { 0%, 49% { opacity: var(--glow-opac); } 50%, 100% { opacity: 0; } }
+        @keyframes g-phantom { 0% { transform: translateY(-5%); opacity: 0; } 50% { opacity: var(--glow-opac); } 100% { transform: translateY(5%); opacity: 0; } }
+        @keyframes g-wave { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes g-flicker { 0%, 100% { opacity: var(--glow-opac); } 33% { opacity: calc(var(--glow-opac) * 0.3); } 66% { opacity: calc(var(--glow-opac) * 0.8); } }
+        @keyframes g-heartbeat { 0%, 100% { transform: scale(1); opacity: calc(var(--glow-opac) * 0.6); } 10%, 30% { transform: scale(1.05); opacity: var(--glow-opac); } 20% { transform: scale(1); opacity: calc(var(--glow-opac) * 0.8); } }
+        @keyframes g-shimmer { 0% { transform: translateX(-50%); } 100% { transform: translateX(50%); } }
+        @keyframes g-glitch { 0%, 100% { transform: translate(0, 0); opacity: var(--glow-opac); } 10% { transform: translate(-5px, 5px); opacity: calc(var(--glow-opac) * 0.5); } 20% { transform: translate(5px, -5px); opacity: var(--glow-opac); } }
+        @keyframes g-scanner { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        @keyframes g-nebula { 0% { filter: hue-rotate(0deg); transform: scale(1); } 100% { filter: hue-rotate(45deg); transform: scale(1.2); } }
+        @keyframes g-ripple { 0% { transform: scale(0.5); opacity: var(--glow-opac); } 100% { transform: scale(2); opacity: 0; } }
+
+        #particleCanvas { position: fixed; inset: 0; z-index: 3; pointer-events: none; opacity: var(--glow-opac); transition: opacity 0.5s ease; transform: translateZ(0); }
+
+        /* --- UI LAYOUT & WIDGETS --- */
+        #ui-wrapper {
+            position: relative; z-index: 100; height: 100dvh; width: 100vw;
+            transition: opacity 0.8s ease; 
+        }
+        body.cloaked #ui-wrapper { opacity: 0; pointer-events: none; }
+
+        .nav-logo { 
+            font-size: 1.3rem; letter-spacing: 6px; color: var(--primary); 
+            text-transform: uppercase; text-shadow: 0 0 20px var(--primary-glow); 
+            font-family: 'Times New Roman', serif; position: absolute; top: 30px; left: 35px; z-index: 200;
+        }
+
+        #top-nav { position: absolute; top: 25px; right: 35px; display: flex; gap: 15px; align-items: center; z-index: 200; flex-wrap: wrap; justify-content: flex-end;}
+
+        .artifact-btn {
+            background: rgba(0,0,0,0.3); backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border); color: var(--primary);
+            padding: 10px 22px; border-radius: 50px; cursor: pointer;
+            font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+            transition: all 0.4s ease; font-family: monospace; box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        .artifact-btn:hover { border-color: var(--accent); color: #fff; box-shadow: 0 0 20px var(--primary-glow); transform: translateY(-2px); background: rgba(255,255,255,0.05); }
+
+        /* GORGEOUS WIDGETS */
+        .widget-dock {
+            position: absolute; top: 120px; right: 35px; display: flex; flex-direction: column; gap: 20px; z-index: 90;
+        }
+        .gorgeous-widget {
+            background: rgba(10, 15, 25, 0.5); backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            padding: 30px; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            min-width: 280px; position: relative; overflow: hidden;
+        }
+        .gorgeous-widget::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--primary), transparent); opacity: 0.5; }
+        .time-display { font-size: 4rem; font-weight: bold; letter-spacing: 5px; color: var(--primary); text-shadow: 0 0 25px var(--primary-glow); line-height: 1; margin-bottom: 5px; font-family: 'Times New Roman', serif;}
+        .date-display { font-size: 1rem; font-family: monospace; color: var(--text-muted); text-transform: uppercase; letter-spacing: 4px; }
+        
+        /* --- THE MAKER PANEL --- */
+        #maker-panel {
+            position: absolute; left: 35px; top: 90px; bottom: 35px; width: 420px;
+            background: var(--glass); backdrop-filter: blur(35px);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            display: flex; flex-direction: column; overflow: hidden; z-index: 100;
+        }
+
+        .tab-bar { display: flex; border-bottom: 1px solid var(--glass-border); background: rgba(0,0,0,0.2); flex-wrap: wrap; flex-shrink: 0; }
+        .tab-btn {
+            flex: 1; min-width: 60px; background: transparent; border: none; color: var(--text-muted);
+            padding: 15px 5px; font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase;
+            cursor: pointer; transition: 0.3s; font-family: monospace; border-bottom: 2px solid transparent;
+        }
+        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); background: rgba(255,255,255,0.03); font-weight: bold; }
+        
+        .tab-content { display: none; padding: 25px; overflow-y: auto; flex: 1; }
+        .tab-content.active { display: flex; flex-direction: column; gap: 15px; }
+        .tab-content::-webkit-scrollbar { width: 4px; }
+        .tab-content::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 50px; }
+
+        /* --- CONTROLS --- */
+        .upload-zone {
+            border: 1px dashed var(--glass-border); padding: 18px; text-align: center;
+            border-radius: 20px; cursor: pointer; color: var(--text-muted); font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; background: rgba(0,0,0,0.1);
+            display: block; width: 100%; font-family: monospace;
+        }
+        .upload-zone:hover { background: rgba(255,255,255,0.08); color: var(--primary); border-color: var(--primary); transform: translateY(-2px); }
+        .upload-zone input { display: none; }
+
+        .btn-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 10px; }
+        
+        .toy-btn {
+            background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            color: var(--text-main); padding: 12px; border-radius: 30px; cursor: pointer;
+            font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase;
+            transition: all 0.3s ease; font-family: monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .toy-btn:hover { border-color: var(--accent); background: rgba(255,255,255,0.1); color: var(--text-main); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        .toy-btn.active { border-color: var(--primary); background: var(--primary); color: #000; font-weight: bold; box-shadow: 0 0 15px var(--primary-glow); }
+
+        h4.section-title { margin: 0 0 8px 0; font-size: 0.7rem; color: var(--primary); letter-spacing: 3px; text-transform: uppercase; opacity: 0.8; font-family: monospace; }
+
+        /* --- AUDIO MIXER --- */
+        .mixer-card {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 12px 18px; background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border); border-radius: 50px; gap: 8px;
+            transition: all 0.3s ease;
+        }
+        .mixer-card:hover { background: rgba(255,255,255,0.06); }
+        .mixer-card.playing { border-color: var(--accent); background: rgba(255,255,255,0.1); box-shadow: 0 0 15px rgba(0,0,0,0.2); }
+        .mixer-btn { background: none; border: none; color: var(--text-muted); font-size: 0.85rem; text-align: left; cursor: pointer; font-family: 'Georgia', serif; flex: 1; padding: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; transition: 0.3s; }
+        .mixer-card.playing .mixer-btn { color: var(--primary); text-shadow: 0 0 10px var(--primary-glow); font-style: italic; }
+        .mixer-slider { -webkit-appearance: none; width: 60px; height: 4px; background: rgba(255,255,255,0.15); outline: none; border-radius: 50px; }
+        .mixer-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--primary); border-radius: 50%; cursor: pointer; box-shadow: 0 0 10px var(--primary-glow); transition: 0.2s; }
+        .mixer-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .ctrl-row { display: flex; align-items: center; justify-content: space-between; gap: 15px; background: rgba(0,0,0,0.2); padding: 10px 15px; border-radius: 50px; border: 1px solid transparent; transition: 0.3s; }
+        .ctrl-row:hover { border-color: var(--glass-border); }
+        .ctrl-row label { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; font-family: monospace; letter-spacing: 1px; width: 80px; }
+        .ctrl-slider { flex: 1; -webkit-appearance: none; height: 4px; background: rgba(255,255,255,0.15); outline: none; border-radius: 50px; accent-color: var(--primary); }
+        .ctrl-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; background: var(--primary); border-radius: 50%; cursor: pointer; }
+
+        /* --- MODALS --- */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 200; display: none;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(15px);
+            align-items: center; justify-content: center; padding: 20px;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .modal-overlay.active { display: flex; }
+        
+        .cast-box {
+            width: 100%; max-width: 450px; background: var(--glass);
+            border: 1px solid var(--glass-border); border-radius: 30px;
+            padding: 40px; box-shadow: 0 40px 80px rgba(0,0,0,0.7); text-align: center;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        #somnia-dialog { z-index: 10000; }
+        #somnia-dialog .cast-box { padding: 35px; max-width: 400px; }
+        .core-input {
+            width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border);
+            color: var(--primary); padding: 15px; border-radius: 50px; outline: none; font-family: monospace;
+            margin-bottom: 20px; transition: 0.3s; text-align: center;
+        }
+        .core-input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--primary-glow); background: rgba(0,0,0,0.5); }
+
+        /* --- SCULLERY (RECIPES, CALENDAR, PANTRY) --- */
+        .scullery-bubble {
+            width: 100%; max-width: 1400px; height: 90dvh;
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 40px; padding: 25px; box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+            display: flex; flex-direction: column; overflow: hidden;
+            backdrop-filter: blur(40px);
+        }
+
+        .scullery-nav {
+            display: flex; gap: 15px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; margin-bottom: 20px;
+        }
+        .scullery-nav-btn {
+            background: transparent; border: none; color: var(--text-muted); font-size: 0.9rem;
+            font-family: monospace; text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
+            padding: 10px 20px; transition: 0.3s; border-radius: 12px;
+        }
+        .scullery-nav-btn.active {
+            color: var(--primary); font-weight: bold; background: rgba(255,255,255,0.05);
+            box-shadow: inset 0 0 10px var(--primary-glow);
+        }
+
+        .scullery-view { display: none; flex: 1; overflow: hidden; gap: 20px; }
+        .scullery-view.active { display: flex; }
+
+        /* Recipes Grid */
+        #cookbook-view { flex-direction: column; }
+        .filter-bar { display: flex; gap: 10px; margin-bottom: 15px; overflow-x: auto; padding-bottom: 10px; }
+        .recipe-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; overflow-y: auto; padding-right: 10px;}
+        .recipe-grid::-webkit-scrollbar { width: 6px; }
+        .recipe-grid::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 50px; }
+
+        .recipe-card {
+            background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border); border-radius: 20px;
+            overflow: hidden; transition: 0.3s; cursor: pointer; position: relative;
+            display: flex; flex-direction: column;
+        }
+        .recipe-card:hover { transform: translateY(-5px); border-color: var(--accent); box-shadow: 0 10px 25px rgba(0,0,0,0.5), 0 0 15px var(--primary-glow); }
+        .recipe-img { height: 140px; width: 100%; object-fit: cover; background: #111; border-bottom: 1px solid var(--glass-border);}
+        .recipe-info { padding: 15px; flex: 1; display: flex; flex-direction: column; }
+        .recipe-title { font-size: 1.1rem; color: var(--primary); font-family: 'Times New Roman', serif; margin-bottom: 5px; font-weight: bold; }
+        .recipe-meta { font-size: 0.75rem; color: var(--text-muted); font-family: monospace; margin-bottom: 10px; }
+        .recipe-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: auto; }
+        .recipe-tag { font-size: 0.6rem; padding: 4px 8px; border-radius: 8px; background: rgba(255,255,255,0.1); color: var(--text-main); font-family: monospace; text-transform: uppercase;}
+
+        /* Meal Calendar */
+        #mealplan-view { flex-direction: row; }
+        .meal-sidebar { width: 300px; background: rgba(0,0,0,0.3); border-radius: 20px; padding: 15px; display: flex; flex-direction: column; border: 1px solid var(--glass-border); overflow-y: auto;}
+        .meal-grid-container { flex: 1; background: rgba(0,0,0,0.3); border-radius: 20px; padding: 20px; border: 1px solid var(--glass-border); display: flex; flex-direction: column;}
+        
+        .meal-day-col { flex: 1; border-right: 1px solid rgba(255,255,255,0.05); padding: 0 10px; display: flex; flex-direction: column;}
+        .meal-day-col:last-child { border-right: none; }
+        .meal-day-header { text-align: center; font-family: monospace; font-size: 0.8rem; color: var(--primary); text-transform: uppercase; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; }
+        
+        .drop-zone { min-height: 80px; background: rgba(0,0,0,0.2); border: 1px dashed rgba(255,255,255,0.1); border-radius: 12px; margin-bottom: 15px; padding: 10px; transition: 0.3s; position: relative;}
+        .drop-zone.drag-over { border-color: var(--primary); background: rgba(255,255,255,0.05); }
+        .drop-zone::before { content: attr(data-meal); position: absolute; top: -8px; left: 10px; background: #050508; padding: 0 5px; font-size: 0.6rem; font-family: monospace; color: var(--text-muted); text-transform: uppercase;}
+
+        .planned-meal { background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border); padding: 8px; border-radius: 8px; font-size: 0.8rem; display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; cursor: grab;}
+        .planned-meal span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; font-family: 'Georgia', serif;}
+
+        /* Pantry & Groceries */
+        #pantry-view { display: flex; gap: 20px; }
+        .list-panel { flex: 1; background: rgba(0,0,0,0.3); border-radius: 20px; padding: 20px; border: 1px solid var(--glass-border); display: flex; flex-direction: column; }
+        .list-header { font-size: 1.2rem; color: var(--primary); font-family: 'Times New Roman', serif; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px;}
+        .inv-item { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .inv-name { font-size: 0.9rem; font-family: monospace; }
+        .inv-qty { font-size: 0.8rem; color: var(--accent); background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; }
+
+        /* AI Sous Chef */
+        .ai-panel { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 25px; padding: 25px; box-shadow: inset 0 0 50px rgba(0,0,0,0.5); flex: 1; display: flex; flex-direction: column;}
+        .ai-input { width: 100%; background: rgba(0,0,0,0.6); border: 1px solid var(--glass-border); color: var(--text-main); padding: 15px; border-radius: 15px; outline: none; font-family: 'Georgia', serif; resize: vertical; min-height: 120px; margin-bottom: 10px; font-size: 1rem; line-height: 1.5; border-left: 2px solid var(--primary);}
+        .ai-input:focus { border-color: var(--accent); box-shadow: 0 0 15px var(--primary-glow); }
+
+        /* RESPONSIVE LAYOUT LOGIC */
+        @media (max-width: 1050px) {
+            .scullery-bubble { height: 95dvh; overflow-y: auto; padding: 15px;}
+            #mealplan-view { flex-direction: column; }
+            .meal-sidebar { width: 100%; height: 250px; }
+            .meal-grid-container { flex-direction: column; }
+            .meal-day-col { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px;}
+            #pantry-view { flex-direction: column; }
+            #ui-wrapper { display: flex; flex-direction: column; align-items: center; padding-bottom: 20px; overflow-y: auto; }
+            #top-nav { position: static; display: flex; gap: 10px; padding: 20px; width: 100%; justify-content: center; flex-wrap: wrap; margin-top: 60px;}
+            .nav-logo { position: absolute; top: 20px; left: 50%; transform: translateX(-50%); margin: 0; }
+            .widget-dock { position: static; flex-direction: row; justify-content: center; width: 95%; max-width: 500px; }
+            #maker-panel { position: static; width: 95%; max-width: 500px; height: auto; min-height: 500px; border-radius: 25px; margin-top: 20px; }
+        }
+
+        /* TV OPTIMIZATION */
+        @media (min-width: 1800px) {
+            .scullery-bubble { max-width: 1700px !important; height: 80dvh !important; padding: 50px !important; }
+            .ai-input { font-size: 1.3rem !important; line-height: 1.8 !important; }
+            .boot-title { font-size: 4rem !important; }
+            .nav-logo { font-size: 2rem !important; top: 40px !important; left: 50px !important;}
+            #maker-panel { width: 550px !important; top: 120px !important;}
+            .widget-dock { top: 120px !important; right: 50px !important;}
+            .artifact-btn { font-size: 0.9rem !important; padding: 15px 30px !important; }
+            .recipe-card { min-height: 300px; }
+            .recipe-img { height: 200px; }
+        }
+    </style>
+</head>
+<body id="os-body" onclick="restoreUI()">
+
+    <div id="boot-screen">
+        <div class="kore-orb"></div>
+        <div class="boot-content">
+            <h1 class="boot-title">SOMNIASCULLERY</h1>
+            <p class="boot-disclaimer">
+                A bubbling cauldron of local-first nourishment. Where meal plans steep in quiet intention, and your recipes remain safely tucked away in your private digital scullery. No ads, no tracking. Just the hearth.
+            </p>
+            <button class="artifact-btn" style="padding: 16px 45px; font-size: 1rem; border-color: var(--accent); border-radius: 50px;" onclick="startEngine()">STOKE THE FIRE</button>
+        </div>
+    </div>
+
+    <div id="somnia-dialog" class="modal-overlay">
+        <div class="cast-box">
+            <h3 id="dialog-title" style="color: var(--primary); letter-spacing: 4px; margin-top: 0; text-transform: uppercase; font-family: 'Times New Roman', serif;">Notice</h3>
+            <p id="dialog-msg" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-family: 'Georgia', serif; font-style: italic;"></p>
+            <input type="text" id="dialog-input" class="core-input" style="display:none; border-radius: 12px;">
+            <div style="display:flex; gap:15px; width:100%;">
+                <button id="dialog-cancel" class="toy-btn" style="flex:1;">Nevermind</button>
+                <button id="dialog-confirm" class="toy-btn" style="flex:1; border-color:var(--accent); background: rgba(255,255,255,0.05); color: var(--text-main);">Confirm</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="drop-modal" class="modal-overlay" onclick="toggleModal('drop-modal')">
+        <div class="cast-box" onclick="event.stopPropagation()">
+            <h3 style="color: var(--primary); letter-spacing: 4px; margin-top: 0; text-transform: uppercase; font-family: 'Times New Roman', serif;">Drop Your Vibe</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 25px; font-family: 'Georgia', serif; font-style: italic;">Copy the link below to drop this Scullery setup anywhere:</p>
+            <input type="text" id="drop-link-input" class="core-input" style="border-radius: 12px;" readonly value="https://project-kore-llc.github.io/SomniaScullery/" onclick="this.select()">
+            <button class="toy-btn" style="width: 100%; border-color:var(--accent); color:var(--text-main);" onclick="toggleModal('drop-modal')">Close</button>
+        </div>
+    </div>
+
+    <div id="recipe-modal" class="modal-overlay" onclick="closeRecipeModal()">
+        <div class="cast-box" style="max-width: 700px; padding: 30px; text-align: left;" onclick="event.stopPropagation()">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
+                <h2 id="rm-title" style="color: var(--primary); font-family: 'Times New Roman', serif; margin: 0; font-size: 2rem;">Recipe Title</h2>
+                <button class="toy-btn" style="padding: 5px 12px; border-color: #fb7185; color: #fb7185;" onclick="closeRecipeModal()">✕</button>
+            </div>
+            <div id="rm-tags" class="recipe-tags" style="margin-bottom: 20px;"></div>
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 250px;">
+                    <h4 class="section-title">Ingredients</h4>
+                    <ul id="rm-ingredients" style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; padding-left: 20px; font-family: monospace;"></ul>
+                </div>
+                <div style="flex: 1; min-width: 250px;">
+                    <h4 class="section-title">Instructions</h4>
+                    <div id="rm-instructions" style="color: var(--text-main); font-size: 0.95rem; line-height: 1.8;"></div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; display: flex; gap: 10px;">
+                <button class="artifact-btn" style="flex: 1;" onclick="editCurrentRecipe()">✏️ Edit</button>
+                <button class="artifact-btn" style="flex: 1; border-color: #fb7185; color: #fb7185;" onclick="deleteCurrentRecipe()">🗑️ Delete</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bg-anchor"></div>
+    <div id="glow-layer" class="glow-pulse"></div>
+    <canvas id="particleCanvas"></canvas>
+
+    <div id="ui-wrapper">
+        <div class="nav-logo">SOMNIASCULLERY</div>
+        
+        <div id="top-nav" onclick="event.stopPropagation()">
+            <button class="artifact-btn" onclick="toggleCloak()">Cloak UI</button>
+            <button class="artifact-btn" onclick="toggleModal('scullery-modal')">The Scullery</button>
+            <button class="artifact-btn" onclick="toggleModal('cast-modal')">Project</button>
+            <button class="artifact-btn btn-drop" onclick="dropSomnia()">Drop</button>
+        </div>
+
+        <div class="widget-dock" onclick="event.stopPropagation()">
+            <div class="gorgeous-widget">
+                <div class="time-display" id="clock-widget">00:00</div>
+                <div class="date-display" id="date-widget">Loading...</div>
+            </div>
+            <div class="gorgeous-widget">
+                <div class="weather-display" id="weather-icon">☁️ 72°F</div>
+                <div class="weather-desc" id="weather-text">Calm & Overcast</div>
+                <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 10px; font-family: monospace; letter-spacing: 2px;">LOCAL FIRST REGIONAL DATA</div>
+            </div>
+        </div>
+
+        <main id="maker-panel" onclick="event.stopPropagation()">
+            <div class="tab-bar">
+                <button class="tab-btn active" onclick="switchTab('tab-audio', this)">Audio</button>
+                <button class="tab-btn" onclick="switchTab('tab-canvas', this)">Canvas</button>
+                <button class="tab-btn" onclick="switchTab('tab-atmos', this)">Atmos</button>
+                <button class="tab-btn" onclick="switchTab('tab-vault', this)">Vault</button>
+                <button class="tab-btn" onclick="switchTab('tab-protips', this)">Pro Tips</button>
+            </div>
+
+            <div id="tab-audio" class="tab-content active">
+                <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
+                    <label class="toy-btn" style="flex:1; text-align:center; border-color: var(--accent);">
+                        ✨ Add Custom Sound
+                        <input type="file" style="display:none;" accept="audio/*" onchange="handleAudioUpload(this)">
+                    </label>
+                    <button class="toy-btn" onclick="stopAllAudio()" style="border-color:#fb7185; color:#fb7185; background: rgba(251,113,133,0.05);">Shh!</button>
+                </div>
+                <div class="ctrl-row" style="margin-top: 10px;">
+                    <label style="color: var(--primary);">Master Gain</label>
+                    <input type="range" class="ctrl-slider" id="master-gain-slider" min="0" max="2" step="0.1" value="1" oninput="setMasterGain(this.value)">
+                </div>
+                <div id="mixer-container" style="display:flex; flex-direction:column; gap:10px; margin-top: 10px;"></div>
+            </div>
+
+            <div id="tab-canvas" class="tab-content">
+                <h4 class="section-title">Your Kitchen Walls</h4>
+                <label class="upload-zone" style="margin-bottom: 15px;">
+                    <span style="display:block; margin-bottom: 5px;">🖼️ Upload Local Background</span>
+                    <span style="font-size: 0.6rem; opacity: 0.6; font-style: italic;">(It's safe, we promise!)</span>
+                    <input type="file" accept="image/*" onchange="executeImageUpload(this)">
+                </label>
+                <div id="custom-bgs" style="display:flex; flex-direction:column; gap: 10px;"></div>
+            </div>
+
+            <div id="tab-atmos" class="tab-content">
+                <h4 class="section-title">Color Palettes</h4>
+                <div class="btn-grid" id="color-grid"></div>
+
+                <h4 class="section-title" style="margin-top:20px;">Sprinkles (Particles)</h4>
+                <div class="btn-grid" id="particle-grid"></div>
+
+                <h4 class="section-title" style="margin-top:20px;">Glow Styles</h4>
+                <div class="btn-grid" id="glow-grid"></div>
+
+                <h4 class="section-title" style="margin-top:20px;">Sprinkle Colors</h4>
+                <div class="btn-grid" id="particle-color-grid"></div>
+
+                <h4 class="section-title" style="margin-top:20px;">Glow Colors</h4>
+                <div class="btn-grid" id="glow-color-grid"></div>
+
+                <h4 class="section-title" style="margin-top:25px;">Engine Tweaks</h4>
+                <div class="ctrl-row"><label>Speed</label><input type="range" class="ctrl-slider" id="speed-slider" min="1" max="20" value="10" oninput="updateVar('--anim-speed', (21-this.value)+'s'); saveCurrentState();"></div>
+                <div class="ctrl-row"><label>Opacity</label><input type="range" class="ctrl-slider" id="opac-slider" min="0" max="1" step="0.1" value="0.3" oninput="updateVar('--glow-opac', this.value); saveCurrentState();"></div>
+                <div class="ctrl-row"><label>Brightness</label><input type="range" class="ctrl-slider" id="bright-slider" min="0.2" max="2" step="0.1" value="0.85" oninput="updateVar('--bg-bright', this.value); saveCurrentState();"></div>
+                <div class="ctrl-row"><label>Zoom</label><input type="range" class="ctrl-slider" id="zoom-slider" min="1" max="2" step="0.1" value="1" oninput="updateVar('--bg-zoom', this.value); saveCurrentState();"></div>
+                <div class="ctrl-row"><label>Density</label><input type="range" class="ctrl-slider" id="density-slider" min="10" max="200" value="50" step="10" oninput="updateParticleDensity(this.value); saveCurrentState();"></div>
+                <div class="ctrl-row" style="margin-top: 5px;"><label>Low GPU</label><input type="checkbox" id="lowGpuToggle" style="accent-color: var(--primary); transform: scale(1.2);" onclick="toggleLowGpu()"></div>
+            </div>
+
+            <div id="tab-vault" class="tab-content">
+                <button class="toy-btn" id="save-btn" style="border-color: var(--primary); padding: 18px; font-size: 0.75rem; border-radius: 50px;" onclick="savePreset()">💖 Save This Vibe to Vault</button>
+                <div style="display:flex; gap:10px; margin-top: 10px;">
+                    <button class="toy-btn" style="flex:1; border-color: var(--glass-border);" onclick="exportVibes()">📥 Export Vibes</button>
+                    <label class="toy-btn" style="flex:1; text-align:center; border-color: var(--glass-border); cursor: pointer;">
+                        📤 Import Vibes
+                        <input type="file" style="display:none;" accept=".json" onchange="importVibes(this)">
+                    </label>
+                </div>
+                <div id="vault-list" style="display:flex; flex-direction:column; gap:12px; margin-top:15px;"></div>
+            </div>
+
+            <div id="tab-protips" class="tab-content">
+                <h4 class="section-title">SOMNIASCULLERY PRO TIPS</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; margin-top: 0;">
+                    Welcome to your highly aesthetic, offline-first digital kitchen. Here is how to make the most of it:
+                </p>
+                <ul style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; padding-left: 20px;">
+                    <li><strong>WakeLock Active:</strong> SomniaScullery uses the WakeLock API. Your screen will NOT go to sleep while the app is visible—perfect for when your hands are covered in batter!</li>
+                    <li><strong>Drag & Drop Planning:</strong> In the Meal Plan tab, drag recipes from the sidebar directly onto the calendar days.</li>
+                    <li><strong>Dietary Tags:</strong> Tag your recipes (e.g., Keto, RPG, GF). Click the tags in the cookbook to filter.</li>
+                    <li><strong>Local First:</strong> Everything—images, recipes, meal plans—lives exclusively in your device's IndexedDB. Export your Scullery data in the AI/Settings tab to back it up!</li>
+                </ul>
+
+                <h4 class="section-title" style="margin-top: 15px; color: var(--primary);">🤖 Pro Tip: Awakening the AI Sous Chef</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                    The AI Sous Chef can auto-generate recipes or full meal plans based on your specific macros, budgets, and family preferences.<br>
+                    1. Go to <strong>aistudio.google.com</strong> and sign in with your Google account.<br>
+                    2. Click <strong>"Get API key"</strong> and create a key.<br>
+                    3. Open <strong>The Scullery</strong> -> <strong>AI Sous Chef</strong> tab.<br>
+                    4. Paste your key and click <strong>Save Key</strong>.<br>
+                    <em>Example Prompt: "I need an 1800 calorie, 150g protein daily meal plan for a family of 4 on a budget. Give me recipes."</em>
+                </p>
+                
+                <h4 class="section-title" style="margin-top: 15px; color: var(--primary);">PWA Support</h4>
+                <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                    This app is PWA enabled. Install it to your device's home screen for a completely offline computing experience!
+                </p>
+            </div>
+        </main>
+    </div>
+
+    <div id="scullery-modal" class="modal-overlay" style="align-items: flex-start; padding-top: 40px;" onclick="toggleModal('scullery-modal')">
+        <div class="scullery-bubble" onclick="event.stopPropagation()">
+            
+            <div class="scullery-nav">
+                <button class="scullery-nav-btn active" onclick="setSculleryView('cookbook', this)">Cookbook</button>
+                <button class="scullery-nav-btn" onclick="setSculleryView('mealplan', this)">Meal Calendar</button>
+                <button class="scullery-nav-btn" onclick="setSculleryView('pantry', this)">Pantry & Groceries</button>
+                <button class="scullery-nav-btn" onclick="setSculleryView('ai', this)">AI Sous Chef & Backup</button>
+            </div>
+
+            <div id="cookbook-view" class="scullery-view active">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                    <div class="filter-bar" id="recipe-filter-bar">
+                        <button class="artifact-btn active" style="padding: 5px 12px;" onclick="filterRecipes('All')">All</button>
+                        <button class="artifact-btn" style="padding: 5px 12px;" onclick="filterRecipes('RPG')">RPG</button>
+                        <button class="artifact-btn" style="padding: 5px 12px;" onclick="filterRecipes('Horror')">Horror</button>
+                        <button class="artifact-btn" style="padding: 5px 12px;" onclick="filterRecipes('Keto')">Keto</button>
+                        <button class="artifact-btn" style="padding: 5px 12px;" onclick="filterRecipes('Vegan')">Vegan</button>
+                    </div>
+                    <button class="artifact-btn" style="border-color: var(--accent);" onclick="promptNewRecipe()">+ Add Recipe</button>
+                </div>
+                <div class="recipe-grid" id="recipe-grid">
+                    </div>
+            </div>
+
+            <div id="mealplan-view" class="scullery-view">
+                <div class="meal-sidebar">
+                    <h4 class="section-title">Your Recipes</h4>
+                    <p style="font-size: 0.7rem; color: var(--text-muted); font-family: monospace;">Drag onto calendar days</p>
+                    <div id="drag-recipes-list" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                        </div>
+                </div>
+                
+                <div class="meal-grid-container">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                        <button class="artifact-btn" onclick="navMealWeek(-1)">◀ Prev Week</button>
+                        <div id="meal-week-label" style="color: var(--primary); font-family: 'Times New Roman', serif; font-size: 1.2rem; text-transform: uppercase;">Current Week</div>
+                        <button class="artifact-btn" onclick="navMealWeek(1)">Next Week ▶</button>
+                    </div>
+                    <div style="display: flex; flex: 1;" id="meal-calendar-grid">
+                        </div>
+                </div>
+            </div>
+
+            <div id="pantry-view" class="scullery-view">
+                <div class="list-panel">
+                    <div class="list-header">Pantry Inventory</div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="new-pantry-item" class="core-input" style="margin:0; padding: 10px; flex: 2;" placeholder="Item name...">
+                        <input type="text" id="new-pantry-qty" class="core-input" style="margin:0; padding: 10px; flex: 1;" placeholder="Qty (e.g. 2 lbs)">
+                        <button class="artifact-btn" onclick="addPantryItem()">Add</button>
+                    </div>
+                    <div id="pantry-list" style="overflow-y: auto; flex: 1; padding-right: 10px;"></div>
+                </div>
+                
+                <div class="list-panel">
+                    <div class="list-header">Grocery List</div>
+                    <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                        <input type="text" id="new-grocery-item" class="core-input" style="margin:0; padding: 10px; flex: 1;" placeholder="Need to buy..." onkeypress="if(event.key==='Enter') addGroceryItem()">
+                        <button class="artifact-btn" onclick="addGroceryItem()">Add</button>
+                    </div>
+                    <div id="grocery-list" style="overflow-y: auto; flex: 1; padding-right: 10px;"></div>
+                </div>
+            </div>
+
+            <div id="ai-view" class="scullery-view" style="flex-direction: row; gap: 20px;">
+                <div class="ai-panel">
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px;">
+                        <span style="font-family: 'Times New Roman', serif; font-size: 1.2rem; color: var(--primary); text-transform: uppercase;">🧠 AI Sous Chef</span>
+                        <div style="display: flex; gap: 5px;">
+                            <input type="password" id="gemini-key-input" class="core-input" style="margin:0; padding: 8px 12px; width: 150px; font-size: 0.8rem; border-radius: 8px;" placeholder="Gemini API Key...">
+                            <button class="toy-btn" id="save-key-btn" style="padding: 8px 12px; font-size: 0.7rem; border-radius: 8px;" onclick="saveApiKey()">Save</button>
+                        </div>
+                    </div>
+                    <textarea class="ai-input" id="ai-prompt" placeholder="Ask the Sous Chef... e.g., 'Generate a 3-day Keto meal plan hitting 1600 calories, and write the recipes.'"></textarea>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="artifact-btn" style="flex: 1; border-color: var(--accent); padding: 15px;" onclick="processAISousChef('recipe')">Generate Recipe</button>
+                        <button class="artifact-btn" style="flex: 1; border-color: var(--accent); padding: 15px;" onclick="processAISousChef('plan')">Plan Weekly Meals</button>
+                    </div>
+                    <div id="ai-status" style="font-size: 0.8rem; color: var(--text-muted); font-family: monospace; margin-top: 15px; text-align: center;">Ready to assist.</div>
+                </div>
+
+                <div class="ai-panel" style="flex: 0.5;">
+                    <span style="font-family: 'Times New Roman', serif; font-size: 1.2rem; color: var(--primary); text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 15px; margin-bottom: 15px;">💾 Data & Sync</span>
+                    <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.6;">
+                        Your recipes, pantry, and meal plans are strictly local. Export them safely here.
+                    </p>
+                    <button class="artifact-btn" style="margin-bottom: 15px; width: 100%; padding: 12px;" onclick="exportScullery()">📥 Export Scullery Data</button>
+                    <label class="artifact-btn" style="width: 100%; padding: 12px; text-align: center; cursor: pointer; display: block;">
+                        📤 Import Scullery Data
+                        <input type="file" style="display:none;" accept=".json" onchange="importScullery(this)">
+                    </label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="cast-modal" class="modal-overlay" onclick="toggleModal('cast-modal')">
+        <div class="cast-box" onclick="event.stopPropagation()">
+            <h3 style="color: var(--primary); letter-spacing: 4px; margin-top: 0; margin-bottom: 15px; font-family: 'Times New Roman', serif;">PROJECT TO THE BIG SCREEN</h3>
+            <p style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 30px; font-family: 'Georgia', serif; font-style: italic;">
+                Want to make your kitchen entirely magical? Use your browser's Tab Mirroring to cast this cozy Scullery to your TV!
+            </p>
+            <button class="toy-btn" style="width: 100%; margin-bottom: 10px; padding: 18px; border-color: var(--accent); color: var(--text-main); font-size: 0.8rem; border-radius: 50px;" onclick="toggleFullscreen()">⛶ Fill The Screen</button>
+        </div>
+    </div>
+
+    <script>
+        // Set Default Aesthetic Mode
+        document.documentElement.className = 'vintage-mode';
+
+        // PWA REGISTRATION
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .catch(err => console.log('PWA bypassed for local dev.'));
+            });
+        }
+
+        // WAKE LOCK API (Prevents screen lock with batter hands)
+        let wakeLock = null;
+        async function requestWakeLock() {
+            try {
+                if ('wakeLock' in navigator) {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    console.log('Screen Wake Lock active');
+                }
+            } catch (err) { console.log(`Wake Lock error: ${err.name}, ${err.message}`); }
+        }
+        document.addEventListener('visibilitychange', async () => {
+            if (wakeLock !== null && document.visibilityState === 'visible') requestWakeLock();
+        });
+
+        // === 0. SOMNIASCULLERY DB (IndexedDB) ===
+        // UPDATED: Now fails gracefully if browser blocks IndexedDB instead of crashing the app
+        const dbPromise = new Promise((resolve) => {
+            try {
+                const req = indexedDB.open('SomniaSculleryDB_Core', 1);
+                req.onupgradeneeded = e => {
+                    const db = e.target.result;
+                    if (!db.objectStoreNames.contains('media')) db.createObjectStore('media');
+                    if (!db.objectStoreNames.contains('recipes')) db.createObjectStore('recipes', { keyPath: 'id' });
+                    if (!db.objectStoreNames.contains('pantry')) db.createObjectStore('pantry', { keyPath: 'id' });
+                    if (!db.objectStoreNames.contains('groceries')) db.createObjectStore('groceries', { keyPath: 'id' });
+                    if (!db.objectStoreNames.contains('meals')) db.createObjectStore('meals', { keyPath: 'id' });
+                };
+                req.onsuccess = e => resolve(e.target.result);
+                req.onerror = e => { console.warn('IndexedDB blocked or error', e); resolve(null); };
+            } catch(err) {
+                console.warn('IndexedDB not available', err); resolve(null);
+            }
+        });
+
+        // Media Store
+        async function saveMedia(key, blob) { const db = await dbPromise; if(!db) return; db.transaction('media', 'readwrite').objectStore('media').put(blob, key); }
+        async function getMedia(key) { return new Promise(async res => { const db = await dbPromise; if(!db) return res(null); const req = db.transaction('media').objectStore('media').get(key); req.onsuccess = () => res(req.result); req.onerror = () => res(null); }); }
+        async function getAllMediaKeys() { return new Promise(async res => { const db = await dbPromise; if(!db) return res([]); const req = db.transaction('media').objectStore('media').getAllKeys(); req.onsuccess = () => res(req.result); req.onerror = () => res([]); }); }
+        async function deleteMedia(key) { const db = await dbPromise; if(!db) return; db.transaction('media', 'readwrite').objectStore('media').delete(key); localStorage.removeItem('somnia_name_' + key); }
+
+        // Data Store
+        async function dbPut(store, data) { const db = await dbPromise; if(!db) return; db.transaction(store, 'readwrite').objectStore(store).put(data); }
+        async function dbGetAll(store) { return new Promise(async res => { const db = await dbPromise; if(!db) return res([]); const req = db.transaction(store).objectStore(store).getAll(); req.onsuccess = () => res(req.result); req.onerror = () => res([]); }); }
+        async function dbDelete(store, key) { const db = await dbPromise; if(!db) return; db.transaction(store, 'readwrite').objectStore(store).delete(key); }
+        async function dbGet(store, key) { return new Promise(async res => { const db = await dbPromise; if(!db) return res(null); const req = db.transaction(store).objectStore(store).get(key); req.onsuccess = () => res(req.result); req.onerror = () => res(null); }); }
+
+        // === 0.5. CUSTOM NATIVE ALERTS ===
+        function somniaAlert(title, msg) {
+            return new Promise(resolve => {
+                const modal = document.getElementById('somnia-dialog');
+                document.getElementById('dialog-title').innerText = title;
+                document.getElementById('dialog-msg').innerText = msg;
+                document.getElementById('dialog-input').style.display = 'none';
+                document.getElementById('dialog-cancel').style.display = 'none';
+                const confirmBtn = document.getElementById('dialog-confirm');
+                confirmBtn.innerText = "OKAY!";
+                confirmBtn.onclick = () => { modal.classList.remove('active'); resolve(true); };
+                modal.classList.add('active');
+            });
+        }
+
+        function somniaPrompt(title, msg, defaultVal = "") {
+            return new Promise(resolve => {
+                const modal = document.getElementById('somnia-dialog');
+                document.getElementById('dialog-title').innerText = title;
+                document.getElementById('dialog-msg').innerText = msg;
+                const input = document.getElementById('dialog-input');
+                input.style.display = 'block'; input.value = defaultVal;
+                document.getElementById('dialog-cancel').style.display = 'block';
+                document.getElementById('dialog-cancel').onclick = () => { modal.classList.remove('active'); resolve(null); };
+                const confirmBtn = document.getElementById('dialog-confirm');
+                confirmBtn.innerText = "SAVE IT";
+                confirmBtn.onclick = () => { modal.classList.remove('active'); resolve(input.value); };
+                modal.classList.add('active'); input.focus();
+            });
+        }
+
+        function somniaConfirm(title, msg) {
+            return new Promise(resolve => {
+                const modal = document.getElementById('somnia-dialog');
+                document.getElementById('dialog-title').innerText = title;
+                document.getElementById('dialog-msg').innerText = msg;
+                document.getElementById('dialog-input').style.display = 'none';
+                document.getElementById('dialog-cancel').style.display = 'block';
+                document.getElementById('dialog-cancel').onclick = () => { modal.classList.remove('active'); resolve(false); };
+                const confirmBtn = document.getElementById('dialog-confirm');
+                confirmBtn.innerText = "YES, TRASH IT";
+                confirmBtn.style.color = "#fb7185"; confirmBtn.style.borderColor = "#fb7185";
+                confirmBtn.onclick = () => { modal.classList.remove('active'); confirmBtn.style.color = "var(--text-main)"; confirmBtn.style.borderColor = "var(--accent)"; resolve(true); };
+                modal.classList.add('active');
+            });
+        }
+
+        // === 1. BOOT SEQUENCE ===
+        async function startEngine() {
+            const bootScreen = document.getElementById('boot-screen');
+            if (!bootScreen) return;
+            
+            // Immediately disable pointer events so it CANNOT trap clicks even if it fails
+            bootScreen.style.pointerEvents = 'none';
+            bootScreen.style.opacity = '0';
+            
+            // Initialize AudioContext immediately during the user gesture click
+            initAudioContext();
+
+            try {
+                requestWakeLock();
+                if(!window.location.search) await restoreActiveState();
+                
+                const recipes = await dbGetAll('recipes');
+                if(recipes && recipes.length === 0) {
+                    const preloads = [
+                        { id: "pre_1", title: "Sweetroll (Whiterun Style)", tags: ["Vegetarian", "RPG", "Dessert"], ingredients: "2 cups Flour\n1 cup Milk\nButter\nHoney\nYeast", instructions: "1. Warm milk and honey.\n2. Mix with flour and yeast.\n3. Bake at 350F for 20 mins.\n4. Add thick white icing." },
+                        { id: "pre_2", title: "Hannibal's Fava Beans & 'Pork'", tags: ["Keto", "Horror", "Dinner"], ingredients: "Pork Loin\nRed Wine\nGarlic\nRosemary\nFava Beans", instructions: "1. Marinate pork in red wine and rosemary.\n2. Roast until internal temp is 145F.\n3. Serve with prepared fava beans and a nice Chianti." },
+                        { id: "pre_3", title: "Estus Flask Soup", tags: ["Vegan", "RPG", "Soup"], ingredients: "Tomatoes\nBasil\nVegetable Broth\nFire", instructions: "1. Simmer broth and crushed tomatoes over an open flame.\n2. Rest at the bonfire to restore HP." }
+                    ];
+                    for(let p of preloads) await dbPut('recipes', p);
+                    await loadRecipes();
+                }
+
+                if (!activeAudio['simmering']) {
+                    toggleStem('simmering', 'simmeringpot.mp3');
+                    const slider = document.getElementById('vol-simmering');
+                    if(slider) slider.value = 0.4; 
+                }
+            } catch (e) {
+                console.warn("Boot sequence experienced a hiccup, but UI is safe:", e);
+            } finally {
+                // Guaranteed removal from DOM
+                setTimeout(() => { if (bootScreen.parentNode) bootScreen.remove(); }, 1500);
+            }
+        }
+
+        // === 2. GLOBAL UI ===
+        function switchTab(tabId, btn) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function setSculleryView(viewId, btn) {
+            document.querySelectorAll('.scullery-nav-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.scullery-view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`${viewId}-view`).classList.add('active');
+            
+            if(viewId === 'mealplan') renderMealCalendar();
+        }
+
+        function toggleCloak() { document.body.classList.toggle('cloaked'); }
+        function restoreUI() { document.body.classList.remove('cloaked'); }
+        function toggleModal(modalId) { document.getElementById(modalId).classList.toggle('active'); }
+        function updateVar(name, val) { document.documentElement.style.setProperty(name, val); }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(e => console.log(e));
+            else document.exitFullscreen();
+            document.getElementById('cast-modal').classList.remove('active');
+        }
+
+        // === 3. BACKGROUNDS & STATE ===
+        async function loadCustomBackgrounds(reload = false) {
+            const grid = document.getElementById('custom-bgs');
+            if(reload) grid.innerHTML = '';
+            const keys = await getAllMediaKeys();
+            const bgKeys = keys.filter(k => k.startsWith('bg_'));
+            for(let key of bgKeys) {
+                const blob = await getMedia(key);
+                if(blob) {
+                    const savedName = localStorage.getItem('somnia_name_' + key) || "🖼️ Cozy Pic " + key.replace('bg_', '').substring(0, 3);
+                    addBgButton(URL.createObjectURL(blob), key, savedName);
+                }
+            }
+        }
+
+        function addBgButton(imgUrl, key, name) {
+            const grid = document.getElementById('custom-bgs');
+            const wrap = document.createElement('div'); wrap.style.display = 'flex'; wrap.style.gap = '8px'; wrap.style.width = '100%';
+            const btn = document.createElement('button'); btn.className = 'toy-btn'; btn.style.flex = "1"; btn.textContent = name;
+            btn.onclick = () => {
+                grid.querySelectorAll('.toy-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+                document.getElementById('bg-anchor').style.backgroundImage = `url('${imgUrl}')`;
+                localStorage.setItem('somnia_active_bg_key', key); saveCurrentState();
+            };
+            const editBtn = document.createElement('button'); editBtn.className = 'toy-btn'; editBtn.innerHTML = '✏️'; editBtn.style.padding = '0 15px';
+            editBtn.onclick = () => renameCustomItem(key, 'bg');
+            const delBtn = document.createElement('button'); delBtn.className = 'toy-btn'; delBtn.innerHTML = '✕'; delBtn.style.padding = '0 15px'; delBtn.style.color = '#fb7185'; delBtn.style.borderColor = 'rgba(251,113,133,0.3)';
+            delBtn.onclick = async () => {
+                const confirmed = await somniaConfirm("TRASH THIS CANVAS?", "Are you sure you want to delete this custom background?");
+                if(confirmed) {
+                    await deleteMedia(key);
+                    if(localStorage.getItem('somnia_active_bg_key') === key) {
+                        document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScullery.png')"; localStorage.removeItem('somnia_active_bg_key');
+                    }
+                    await loadCustomBackgrounds(true);
+                }
+            };
+            wrap.appendChild(btn); wrap.appendChild(editBtn); wrap.appendChild(delBtn); grid.prepend(wrap);
+        }
+
+        async function renameCustomItem(key, type) {
+            const currentName = localStorage.getItem('somnia_name_' + key) || "";
+            const newName = await somniaPrompt("RENAME THIS GEM", "What should we call this?", currentName);
+            if (newName) {
+                localStorage.setItem('somnia_name_' + key, newName);
+                if (type === 'audio') { customAudioLibrary = []; await loadCustomAudio(true); } else if (type === 'bg') { await loadCustomBackgrounds(true); }
+            }
+        }
+
+        function executeImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0]; const key = 'bg_' + Date.now();
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                const img = new Image();
+                img.onload = async () => {
+                    const canvas = document.createElement('canvas'); const ctx = canvas.getContext('2d');
+                    const MAX_WIDTH = 1920; let width = img.width; let height = img.height;
+                    if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
+                    canvas.width = width; canvas.height = height; ctx.drawImage(img, 0, 0, width, height);
+                    canvas.toBlob(async (blob) => {
+                        await saveMedia(key, blob);
+                        const finalName = await somniaPrompt("NAME THIS VIBE", "What should we call this masterpiece?", "My Cozy Kitchen") || "🖼️ Custom Canvas";
+                        localStorage.setItem('somnia_name_' + key, finalName);
+                        const imgUrl = URL.createObjectURL(blob); addBgButton(imgUrl, key, finalName);
+                        document.getElementById('bg-anchor').style.backgroundImage = `url('${imgUrl}')`;
+                        localStorage.setItem('somnia_active_bg_key', key); saveCurrentState();
+                    }, 'image/jpeg', 0.85);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file); input.value = ""; 
+        }
+
+        function saveCurrentState() {
+            const state = {
+                bodyClass: document.documentElement.className.replace('cloaked', '').trim(),
+                glowClass: document.getElementById('glow-layer').className, particleType: window.particleType, particleCount: window.particleCount,
+                vars: {
+                    speed: getComputedStyle(document.documentElement).getPropertyValue('--anim-speed').trim(), opac: getComputedStyle(document.documentElement).getPropertyValue('--glow-opac').trim(),
+                    bright: getComputedStyle(document.documentElement).getPropertyValue('--bg-bright').trim(), zoom: getComputedStyle(document.documentElement).getPropertyValue('--bg-zoom').trim(),
+                    pColor: getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim(), gColor: getComputedStyle(document.documentElement).getPropertyValue('--glow-color').trim()
+                }
+            };
+            localStorage.setItem('somnia_active_state', JSON.stringify(state));
+        }
+
+        async function restoreActiveState() {
+            try {
+                const stateStr = localStorage.getItem('somnia_active_state'); const activeBgKey = localStorage.getItem('somnia_active_bg_key');
+                if (activeBgKey) { 
+                    const blob = await getMedia(activeBgKey); 
+                    if(blob) { document.getElementById('bg-anchor').style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; }
+                    else { document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScullery.png')"; } 
+                } else { document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScullery.png')"; }
+                
+                if (stateStr) {
+                    const state = JSON.parse(stateStr);
+                    document.documentElement.className = state.bodyClass || 'vintage-mode'; document.getElementById('glow-layer').className = state.glowClass || 'glow-pulse';
+                    window.particleType = state.particleType || 'dust'; window.particleCount = state.particleCount || 50;
+                    if (state.vars) {
+                        updateVar('--anim-speed', state.vars.speed); updateVar('--glow-opac', state.vars.opac); updateVar('--bg-bright', state.vars.bright); updateVar('--bg-zoom', state.vars.zoom);
+                        updateVar('--particle-color', state.vars.pColor); updateVar('--glow-color', state.vars.gColor);
+                    }
+                }
+            } catch (e) { console.log("State restore error", e); }
+        }
+
+        // === 4. VAULT PRESETS ===
+        let savedVault = JSON.parse(localStorage.getItem('somniaVault')) || [];
+        async function savePreset() {
+            let presetName = await somniaPrompt("VAULT THIS VIBE", "Name your gorgeous aesthetic setup:", "Cozy Setting " + (savedVault.length + 1));
+            if (!presetName) return; 
+            const state = {
+                name: presetName, bodyClass: document.documentElement.className.replace('cloaked', '').trim(), glowClass: document.getElementById('glow-layer').className, particleType: window.particleType, particleCount: window.particleCount, bgKey: localStorage.getItem('somnia_active_bg_key'), 
+                vars: { speed: getComputedStyle(document.documentElement).getPropertyValue('--anim-speed').trim(), opac: getComputedStyle(document.documentElement).getPropertyValue('--glow-opac').trim(), bright: getComputedStyle(document.documentElement).getPropertyValue('--bg-bright').trim(), zoom: getComputedStyle(document.documentElement).getPropertyValue('--bg-zoom').trim(), pColor: getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim(), gColor: getComputedStyle(document.documentElement).getPropertyValue('--glow-color').trim() },
+                audio: Object.keys(activeAudio).map(id => ({ id: id, vol: document.getElementById(`vol-${id}`).value }))
+            };
+            savedVault.push(state); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault();
+        }
+
+        function renderVault() {
+            document.getElementById('vault-list').innerHTML = savedVault.map((preset, index) => `
+                <div class="mixer-card" style="padding: 8px 15px;">
+                    <button class="mixer-btn" style="color: var(--primary);" onclick="loadPreset(${index})">▶ ${preset.name}</button>
+                    <button class="toy-btn" style="padding: 6px 12px; font-size: 0.6rem; border-color: #fb7185; color: #fb7185; background: rgba(251,113,133,0.05);" onclick="promptDeletePreset(${index})">✕</button>
+                </div>
+            `).join('');
+        }
+        async function promptDeletePreset(index) { const confirmed = await somniaConfirm("TRASH THIS VIBE?", "Sure you want to delete this saved preset?"); if(confirmed) { savedVault.splice(index, 1); localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault(); } }
+        async function loadPreset(index) {
+            const state = savedVault[index]; if (!state) return;
+            document.documentElement.className = state.bodyClass; document.getElementById('glow-layer').className = state.glowClass; window.particleType = state.particleType; window.particleCount = state.particleCount; 
+            if (state.bgKey) { const blob = await getMedia(state.bgKey); if(blob) { document.getElementById('bg-anchor').style.backgroundImage = `url('${URL.createObjectURL(blob)}')`; localStorage.setItem('somnia_active_bg_key', state.bgKey); } } else { document.getElementById('bg-anchor').style.backgroundImage = "url('SomniaScullery.png')"; localStorage.removeItem('somnia_active_bg_key'); }
+            updateVar('--anim-speed', state.vars.speed); updateVar('--glow-opac', state.vars.opac); updateVar('--bg-bright', state.vars.bright); updateVar('--bg-zoom', state.vars.zoom); updateVar('--particle-color', state.vars.pColor); updateVar('--glow-color', state.vars.gColor);
+            stopAllAudio(); 
+            if(state.audio) { state.audio.forEach(track => { const sound = soundLibrary.find(s => s.id === track.id) || customAudioLibrary.find(s => s.id === track.id); if (sound) { const slider = document.getElementById(`vol-${track.id}`); if (slider) slider.value = track.vol; toggleStem(track.id, sound.url); } }); }
+            saveCurrentState();
+        }
+
+        // === 5. AUDIO ENGINE ===
+        const activeAudio = {}; let audioCtx; let masterGainNode;
+        // FULL UPDATED LIBRARY INJECTED
+        const soundLibrary = [
+            { id: "rain", name: "🌧️ Gentle Rain", url: "rain.mp3" }, { id: "thunder", name: "🌩️ Thunderstorm", url: "thunder.mp3" },
+            { id: "winterwind", name: "🌬️ Winter Wind", url: "winterwind.mp3" }, { id: "owls", name: "🦉 Midnight Owls", url: "owls.mp3" },
+            { id: "raven", name: "🐦‍⬛ Raven Calls", url: "raven.mp3" }, { id: "frogs", name: "🐸 Swamp Frogs", url: "frogs.mp3" },
+            { id: "crickets", name: "🦗 Night Crickets", url: "crickets.mp3" }, { id: "fire", name: "🔥 Hearth Fire", url: "fire.mp3" },
+            { id: "simmering", name: "🍲 Simmering Pot", url: "simmeringpot.mp3" }, { id: "teacup", name: "☕ Teacup Clinks", url: "teacup.mp3" },
+            { id: "clock", name: "🕰️ Ticking Clock", url: "clock.mp3" }, { id: "cat", name: "🐾 Purring Cat", url: "cat.mp3" },
+            { id: "windchimes", name: "🎐 Wind Chimes", url: "windchimes.mp3" }, { id: "musicbox1", name: "🎶 Music Box I", url: "musicbox1.mp3" }
+        ];
+        let customAudioLibrary = [];
+
+        function initAudioContext() { 
+            if (!audioCtx) { 
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)(); 
+                masterGainNode = audioCtx.createGain(); 
+                masterGainNode.gain.value = document.getElementById('master-gain-slider') ? document.getElementById('master-gain-slider').value : 1; 
+                masterGainNode.connect(audioCtx.destination); 
+            } 
+            if (audioCtx.state === 'suspended') audioCtx.resume(); 
+        }
+        function setMasterGain(val) { if (masterGainNode) masterGainNode.gain.value = val; }
+        async function loadCustomAudio(reload = false) { if(reload) customAudioLibrary = []; const keys = await getAllMediaKeys(); const audioKeys = keys.filter(k => k.startsWith('aud_')); for(let key of audioKeys) { const blob = await getMedia(key); if(blob) { const savedName = localStorage.getItem('somnia_name_' + key) || "📁 " + key.replace('aud_','').substring(0,8); customAudioLibrary.push({ id: key, name: savedName, url: URL.createObjectURL(blob), isCustom: true }); } } initMixer(); }
+        function initMixer() { const container = document.getElementById('mixer-container'); const allSounds = [...customAudioLibrary, ...soundLibrary]; container.innerHTML = allSounds.map(track => { let editBtn = track.isCustom ? `<button class="toy-btn" style="padding: 5px 10px; background:transparent; border:none; margin-right: 5px;" onclick="renameCustomItem('${track.id}', 'audio')">✏️</button>` : ''; let delBtn = track.isCustom ? `<button class="toy-btn" style="padding: 5px 10px; background:transparent; border:none; margin-right: 5px; color:#fb7185;" onclick="promptDeleteAudio('${track.id}')">✕</button>` : ''; return ` <div class="mixer-card" id="card-${track.id}"> <button class="mixer-btn" onclick="toggleStem('${track.id}', '${track.url}')">${track.name}</button> ${editBtn} ${delBtn} <input type="range" id="vol-${track.id}" class="mixer-slider" min="0" max="1" step="0.05" value="0.5" oninput="adjustVol('${track.id}', this.value)"> </div> `}).join(''); Object.keys(activeAudio).forEach(id => { const c = document.getElementById(`card-${id}`); if(c) c.classList.add('playing'); }); }
+        async function promptDeleteAudio(id) { const confirmed = await somniaConfirm("TRASH THIS SOUND?", "Are you sure?"); if(confirmed) { if(activeAudio[id]) { activeAudio[id].audio.pause(); delete activeAudio[id]; } await deleteMedia(id); customAudioLibrary = []; await loadCustomAudio(true); } }
+        function handleAudioUpload(input) { if (!input.files || input.files.length === 0) return; const file = input.files[0]; const key = 'aud_' + Date.now(); saveMedia(key, file).then(async () => { const finalName = await somniaPrompt("NAME THIS SOUND", "What should we call this?", "✨ Kitchen Sounds") || "📁 " + file.name.substring(0,10); localStorage.setItem('somnia_name_' + key, finalName); customAudioLibrary.unshift({ id: key, name: finalName, url: URL.createObjectURL(file), isCustom: true }); initMixer(); }); input.value = "";  }
+        
+        function toggleStem(id, url) { 
+            initAudioContext();  
+            const card = document.getElementById(`card-${id}`); 
+            if (activeAudio[id]) { 
+                activeAudio[id].audio.pause(); 
+                delete activeAudio[id]; 
+                if(card) card.classList.remove('playing'); 
+            } else { 
+                const audio = new Audio(url); 
+                audio.crossOrigin = "anonymous";
+                audio.loop = true;  
+                const source = audioCtx.createMediaElementSource(audio); 
+                const gain = audioCtx.createGain(); 
+                gain.gain.value = document.getElementById(`vol-${id}`) ? document.getElementById(`vol-${id}`).value : 0.5; 
+                source.connect(gain); 
+                gain.connect(masterGainNode); 
+                audio.play().then(() => { 
+                    activeAudio[id] = { audio, gain }; 
+                    if(card) card.classList.add('playing'); 
+                }).catch(e => console.warn("Audio play blocked or file missing:", e)); 
+            } 
+        }
+        
+        function adjustVol(id, val) { if (activeAudio[id]) activeAudio[id].gain.gain.value = val; }
+        function stopAllAudio() { Object.keys(activeAudio).forEach(id => { activeAudio[id].audio.pause(); document.getElementById(`card-${id}`).classList.remove('playing'); delete activeAudio[id]; }); }
+
+        // === 6. ATMOS & PARTICLES ===
+        const colors = [ 'lunar','noir','vellum','amethyst','crimson','emerald','solar','void','obsidian','ghost', 'gothic','library','y2k','vintage','cyber','twilight','autumn','abyss','sepia','frost' ];
+        const glows = [ 'pulse','breathe','strobe','phantom','wave','flicker','aurora','radar','static','none', 'heartbeat','shimmer','glitch','scanner','nebula','vortex','ripple','halo','eclipse','inferno' ];
+        const particlesList = [ 'dust','embers','snow','void','rain','ash','stars','bubbles','matrix','spores', 'leaves','glitch','runes','fireflies','fog','petals','sparks','bats','static','motes' ];
+        const particleColors = [  { name: 'Lunar', value: '#e0e7ff' }, { name: 'Noir', value: '#D4AF37' }, { name: 'Vellum', value: '#C2B280' }, { name: 'Amethyst', value: '#d8b4e2' }, { name: 'Crimson', value: '#fb7185' }, { name: 'Emerald', value: '#34d399' }, { name: 'Solar', value: '#fbbf24' }, { name: 'Void', value: '#ec4899' }, { name: 'Obsidian', value: '#9ca3af' }, { name: 'Ghost', value: '#f8fafc' }, { name: 'Gothic', value: '#881337' }, { name: 'Library', value: '#78350f' }, { name: 'Y2K', value: '#22d3ee' }, { name: 'Vintage', value: '#57534e' }, { name: 'Cyber', value: '#84cc16' }, { name: 'Twilight', value: '#312e81' }, { name: 'Autumn', value: '#ea580c' }, { name: 'Abyss', value: '#0891b2' }, { name: 'Sepia', value: '#b45309' }, { name: 'Frost', value: '#bae6fd' } ];
+        const glowColors = [  { name: 'Lunar', value: 'rgba(224,231,255,0.4)' }, { name: 'Noir', value: 'rgba(212,175,55,0.4)' }, { name: 'Vellum', value: 'rgba(194,178,128,0.4)' }, { name: 'Amethyst', value: 'rgba(216,180,226,0.4)' }, { name: 'Crimson', value: 'rgba(251,113,133,0.4)' }, { name: 'Emerald', value: 'rgba(52,211,153,0.4)' }, { name: 'Solar', value: 'rgba(251,191,36,0.4)' }, { name: 'Void', value: 'rgba(236,72,153,0.4)' }, { name: 'Obsidian', value: 'rgba(156,163,175,0.4)' }, { name: 'Ghost', value: 'rgba(248,250,252,0.4)' }, { name: 'Gothic', value: 'rgba(136,19,55,0.4)' }, { name: 'Library', value: 'rgba(120,53,15,0.4)' }, { name: 'Y2K', value: 'rgba(34,211,238,0.4)' }, { name: 'Vintage', value: 'rgba(87,83,78,0.4)' }, { name: 'Cyber', value: 'rgba(132,204,22,0.4)' }, { name: 'Twilight', value: 'rgba(49,46,129,0.4)' }, { name: 'Autumn', value: 'rgba(234,88,12,0.4)' }, { name: 'Abyss', value: 'rgba(8,145,178,0.4)' }, { name: 'Sepia', value: 'rgba(180,83,9,0.4)' }, { name: 'Frost', value: 'rgba(186,230,253,0.4)' } ];
+
+        function populateGrid(id, arr, type) {
+            const grid = document.getElementById(id);
+            arr.forEach((item, index) => {
+                const isObj = typeof item === 'object'; const label = isObj ? item.name : item; const val = isObj ? item.value : item;
+                const b = document.createElement('button'); b.className = 'toy-btn'; b.textContent = label;  if(index === 0) b.classList.add('active'); 
+                b.onclick = () => {
+                    document.querySelectorAll(`#${id} .toy-btn`).forEach(btn => btn.classList.remove('active')); b.classList.add('active');
+                    if(type === 'color') document.documentElement.className = `${val}-mode`;
+                    if(type === 'glow') document.getElementById('glow-layer').className = `glow-${val}`;
+                    if(type === 'particle') window.particleType = val;
+                    if(type === 'particleColor') updateVar('--particle-color', val);
+                    if(type === 'glowColor') updateVar('--glow-color', val);
+                    saveCurrentState(); 
+                };
+                grid.appendChild(b);
+            });
+        }
+
+        window.particleType = 'dust'; window.particleCount = 50; 
+        function buildParticles(w, h) { return Array.from({ length: window.particleCount }, () => ({ x: Math.random() * w, y: Math.random() * h, r: Math.random() * 2 + 0.5, vx: (Math.random() - 0.5), vy: (Math.random() - 0.5), t: Math.random() * 100 })); }
+        function updateParticleDensity(val) { window.particleCount = parseInt(val); }
+
+        let lowGpu = false;
+        function toggleLowGpu() { lowGpu = !lowGpu; const canvas = document.getElementById('particleCanvas'); if (lowGpu) { canvas.width = window.innerWidth / 2; canvas.height = window.innerHeight / 2; canvas.style.transform = "scale(2) translateZ(0)"; }  else { canvas.width = window.innerWidth; canvas.height = window.innerHeight; canvas.style.transform = "scale(1) translateZ(0)"; } }
+
+        function initParticles() {
+            const canvas = document.getElementById('particleCanvas'); const ctx = canvas.getContext('2d');
+            let w = canvas.width = window.innerWidth; let h = canvas.height = window.innerHeight;
+            window.addEventListener('resize', () => { w = canvas.width = window.innerWidth; h = canvas.height = window.innerHeight; particles = buildParticles(w, h); });
+            let particles = buildParticles(w, h); const isDinosaur = navigator.hardwareConcurrency < 4 || window.innerWidth < 1024; let lastTime = 0;
+
+            function loop(timestamp) {
+                requestAnimationFrame(loop);
+                if (!timestamp) timestamp = performance.now();
+                if (timestamp - lastTime < (isDinosaur ? 33 : 16)) return;
+                lastTime = timestamp;
+                ctx.clearRect(0, 0, w, h);
+                if (particles.length !== window.particleCount) particles = buildParticles(w, h);
+
+                let color = getComputedStyle(document.documentElement).getPropertyValue('--particle-color').trim();
+                if (color.includes('var(')) { const varName = color.match(/var\(([^)]+)\)/)[1].trim(); color = getComputedStyle(document.documentElement).getPropertyValue(varName).trim(); }
+                ctx.fillStyle = color; ctx.shadowBlur = lowGpu ? 2 : (isDinosaur ? 0 : 8); ctx.shadowColor = color;
+
+                particles.forEach((p, i) => {
+                    let spd = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--anim-speed')) || 10; let mult = 10 / spd;
+                    if (window.particleType === 'dust') { p.x += p.vx * mult; p.y += p.vy * mult; }
+                    else if (window.particleType === 'embers') { p.y -= (Math.abs(p.vy)+0.5)*mult; p.x += p.vx*mult; }
+                    else if (window.particleType === 'snow') { p.y += (Math.abs(p.vy)+0.5)*mult; p.x += Math.sin(p.y/50)*mult; }
+                    else if (window.particleType === 'void') { p.x += p.vx*2*mult; p.y += p.vy*2*mult; ctx.shadowBlur=0; }
+                    else if (window.particleType === 'rain') { p.y += 8*mult; p.x -= 1*mult; }
+                    else if (window.particleType === 'ash') { p.y -= p.vy*mult; p.x += Math.cos(p.y/30)*mult; ctx.fillStyle="#555"; }
+                    else if (window.particleType === 'stars') { p.x += 0.05*mult; p.y += 0.05*mult; if(Math.random()<0.01) p.r = Math.random()*3; }
+                    else if (window.particleType === 'bubbles') { p.y -= 2*mult; p.x += Math.sin(p.y/20)*2*mult; ctx.beginPath(); ctx.arc(p.x,p.y,p.r*2,0,Math.PI*2); ctx.strokeStyle=color; ctx.stroke(); return; }
+                    else if (window.particleType === 'matrix') { p.y += 4*mult; if(i%2===0) ctx.fillText(String.fromCharCode(0x30A0+Math.random()*96), p.x, p.y); return; }
+                    else if (window.particleType === 'spores') { p.x += (Math.random()-0.5)*mult; p.y += (Math.random()-0.5)*mult; p.r = Math.abs(Math.sin(Date.now()/1000+i))*3; }
+                    else if (window.particleType === 'leaves') { p.y += (Math.abs(p.vy)+1)*mult; p.x += Math.sin(p.y/30)*2*mult; ctx.fillRect(p.x, p.y, p.r*2, p.r); return; }
+                    else if (window.particleType === 'glitch') { if(Math.random()<0.05){ p.x = Math.random()*w; p.y = Math.random()*h; } ctx.fillRect(p.x, p.y, p.r*10, 2); return; }
+                    else if (window.particleType === 'runes') { p.y -= 1*mult; ctx.fillText(String.fromCharCode(0x16A0+Math.random()*80), p.x, p.y); return; }
+                    else if (window.particleType === 'fireflies') { p.x += Math.sin(p.t)*mult; p.y += Math.cos(p.t)*mult; p.t+=0.05; ctx.shadowBlur = 15; ctx.beginPath(); ctx.arc(p.x, p.y, p.r*1.5, 0, Math.PI * 2); ctx.fill(); return; }
+                    else if (window.particleType === 'fog') { p.x += p.vx*mult; ctx.globalAlpha=0.1; ctx.beginPath(); ctx.arc(p.x, p.y, p.r*20, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha=1; return; }
+                    else if (window.particleType === 'petals') { p.y += 2*mult; p.x += Math.sin(p.y/40)*3*mult; ctx.fillStyle='rgba(255,182,193,0.8)'; ctx.beginPath(); ctx.ellipse(p.x, p.y, p.r*3, p.r, Math.PI/4, 0, 2*Math.PI); ctx.fill(); return; }
+                    else if (window.particleType === 'sparks') { p.y -= (Math.abs(p.vy)+3)*mult; p.x += (Math.random()-0.5)*mult; ctx.fillRect(p.x, p.y, 2, p.r*4); return; }
+                    else if (window.particleType === 'bats') { p.x += p.vx*3*mult; p.y += Math.sin(p.x/20)*2*mult; ctx.fillText('v', p.x, p.y); return; }
+                    else if (window.particleType === 'static') { if(Math.random()<0.1) { p.x=Math.random()*w; p.y=Math.random()*h; } ctx.fillRect(p.x, p.y, 2, 2); return; }
+                    else if (window.particleType === 'motes') { p.y -= 0.5*mult; p.x += Math.sin(p.y/50)*mult; ctx.globalAlpha=Math.abs(Math.sin(p.t)); p.t+=0.02; ctx.beginPath(); ctx.arc(p.x, p.y, p.r/2, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha=1; return; }
+
+                    if (p.x < 0) p.x = w; if (p.x > w) p.x = 0; if (p.y < 0) p.y = h; if (p.y > h) p.y = 0;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+                });
+            }
+            requestAnimationFrame(loop);
+        }
+
+        // === 7. NATIVE SOCIAL SHARE ===
+        function parseUrlState() { const urlParams = new URLSearchParams(window.location.search); if(urlParams.has('vibe')) document.documentElement.className = urlParams.get('vibe') + '-mode'; if(urlParams.has('p')) window.particleType = urlParams.get('p'); if(urlParams.has('g')) document.getElementById('glow-layer').className = 'glow-' + urlParams.get('g'); }
+        async function dropSomnia() { const dropUrl = `https://project-kore-llc.github.io/SomniaScullery/`; if (navigator.share) { try { await navigator.share({ title: 'SomniaScullery', text: 'Step into my Digital Kitchen.', url: dropUrl }); } catch (err) { console.log("Drop canceled", err); } } else { toggleModal('drop-modal'); } }
+        function updateWidgets() { const now = new Date(); document.getElementById('clock-widget').textContent = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }); document.getElementById('date-widget').textContent = now.toLocaleDateString([], { weekday: 'long', month: 'long', day: 'numeric' }); }
+
+        // === 8. SCULLERY: RECIPES, CALENDAR, PANTRY ===
+        let currentRecipeFilter = 'All';
+        let currentRecipeViewId = null; // for modal
+        let mealCalendarDate = new Date(); // Start of week
+
+        // RECIPES
+        async function loadRecipes() {
+            const recipes = await dbGetAll('recipes');
+            const grid = document.getElementById('recipe-grid');
+            const dragList = document.getElementById('drag-recipes-list');
+            
+            grid.innerHTML = ''; dragList.innerHTML = '';
+            
+            let filtered = recipes;
+            if(currentRecipeFilter !== 'All') {
+                filtered = recipes.filter(r => r.tags && r.tags.includes(currentRecipeFilter));
+            }
+
+            if(filtered.length === 0) {
+                grid.innerHTML = `<div style="color:var(--text-muted); font-family:monospace; padding: 20px;">No recipes found for this tag.</div>`;
+            }
+
+            for(let r of filtered) {
+                let imgSrc = '';
+                if(r.imageKey) {
+                    const blob = await getMedia(r.imageKey);
+                    if(blob) imgSrc = URL.createObjectURL(blob);
+                }
+                
+                // Cookbook Grid Card
+                const card = document.createElement('div');
+                card.className = 'recipe-card';
+                card.onclick = () => openRecipeModal(r.id);
+                card.innerHTML = `
+                    <div class="recipe-img" style="${imgSrc ? `background-image: url('${imgSrc}'); background-size: cover; background-position: center;` : 'display:flex;align-items:center;justify-content:center;color:#333;font-size:2rem;'}">${!imgSrc ? '🍲' : ''}</div>
+                    <div class="recipe-info">
+                        <div class="recipe-title">${r.title}</div>
+                        <div class="recipe-meta">Prep: ${r.prepTime || '--'} | Cook: ${r.cookTime || '--'}</div>
+                        <div class="recipe-tags">${(r.tags || []).map(t => `<span class="recipe-tag">${t}</span>`).join('')}</div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            }
+
+            // Populate Drag List for Calendar
+            recipes.forEach(r => {
+                const dItem = document.createElement('div');
+                dItem.className = 'planned-meal';
+                dItem.draggable = true;
+                dItem.ondragstart = (e) => dragRecipe(e, r.id, r.title);
+                dItem.innerHTML = `<span>${r.title}</span>`;
+                dragList.appendChild(dItem);
+            });
+        }
+
+        function filterRecipes(tag) {
+            currentRecipeFilter = tag;
+            document.querySelectorAll('#recipe-filter-bar .artifact-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            loadRecipes();
+        }
+
+        async function promptNewRecipe() {
+            const title = await somniaPrompt("NEW RECIPE", "What is the name of this dish?", "Secret Soup");
+            if(!title) return;
+            const ingredients = await somniaPrompt("INGREDIENTS", "List ingredients (comma or newline separated):", "Water, Magic");
+            const instructions = await somniaPrompt("INSTRUCTIONS", "How do you make it?", "Simmer and stir.");
+            const tagsRaw = await somniaPrompt("TAGS", "Comma separated tags (e.g., Vegan, Dinner, Horror):", "Dinner");
+            
+            const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()) : [];
+            const newR = {
+                id: 'rec_' + Date.now(),
+                title: title,
+                ingredients: ingredients,
+                instructions: instructions,
+                tags: tags,
+                prepTime: '15m', cookTime: '30m'
+            };
+            
+            // Optional image upload
+            const wantImg = await somniaConfirm("ADD IMAGE?", "Do you want to upload a screenshot or photo for this recipe?");
+            if(wantImg) {
+                const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+                input.onchange = async (e) => {
+                    if(e.target.files[0]) {
+                        const key = 'img_' + Date.now();
+                        await saveMedia(key, e.target.files[0]);
+                        newR.imageKey = key;
+                    }
+                    await dbPut('recipes', newR); loadRecipes();
+                };
+                input.click();
+            } else {
+                await dbPut('recipes', newR); loadRecipes();
+            }
+        }
+
+        async function openRecipeModal(id) {
+            const r = await dbGet('recipes', id);
+            if(!r) return;
+            currentRecipeViewId = id;
+            document.getElementById('rm-title').innerText = r.title;
+            document.getElementById('rm-tags').innerHTML = (r.tags || []).map(t => `<span class="recipe-tag">${t}</span>`).join('');
+            
+            let ingList = r.ingredients ? r.ingredients.split(/[\n,]+/) : [];
+            document.getElementById('rm-ingredients').innerHTML = ingList.map(i => `<li>${i.trim()}</li>`).join('');
+            
+            let instText = r.instructions ? r.instructions.replace(/\n/g, '<br><br>') : '';
+            document.getElementById('rm-instructions').innerHTML = instText;
+            
+            document.getElementById('recipe-modal').classList.add('active');
+        }
+        function closeRecipeModal() { document.getElementById('recipe-modal').classList.remove('active'); currentRecipeViewId = null; }
+
+        async function deleteCurrentRecipe() {
+            if(!currentRecipeViewId) return;
+            const confirmed = await somniaConfirm("TRASH RECIPE?", "Are you sure you want to delete this recipe permanently?");
+            if(confirmed) {
+                const r = await dbGet('recipes', currentRecipeViewId);
+                if(r.imageKey) await deleteMedia(r.imageKey);
+                await dbDelete('recipes', currentRecipeViewId);
+                closeRecipeModal(); loadRecipes();
+            }
+        }
+
+        async function editCurrentRecipe() {
+            if(!currentRecipeViewId) return;
+            const r = await dbGet('recipes', currentRecipeViewId);
+            const inst = await somniaPrompt("EDIT INSTRUCTIONS", "Update the instructions:", r.instructions);
+            if(inst) { r.instructions = inst; await dbPut('recipes', r); openRecipeModal(r.id); loadRecipes(); }
+        }
+
+        // CALENDAR DRAG & DROP
+        function navMealWeek(dir) {
+            mealCalendarDate.setDate(mealCalendarDate.getDate() + (dir * 7));
+            renderMealCalendar();
+        }
+
+        function getFormatDate(d) { return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`; }
+
+        async function renderMealCalendar() {
+            const grid = document.getElementById('meal-calendar-grid');
+            grid.innerHTML = '';
+            
+            const startOfWeek = new Date(mealCalendarDate);
+            startOfWeek.setDate(startCalendarDay(startOfWeek)); 
+            
+            const endOfWeek = new Date(startOfWeek); endOfWeek.setDate(startOfWeek.getDate() + 6);
+            document.getElementById('meal-week-label').innerText = `${startOfWeek.toLocaleDateString([], {month:'short', day:'numeric'})} - ${endOfWeek.toLocaleDateString([], {month:'short', day:'numeric'})}`;
+
+            const meals = await dbGetAll('meals');
+
+            const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+            
+            for(let i=0; i<7; i++) {
+                let colDate = new Date(startOfWeek); colDate.setDate(startOfWeek.getDate() + i);
+                let dStr = getFormatDate(colDate);
+                
+                let col = document.createElement('div');
+                col.className = 'meal-day-col';
+                col.innerHTML = `<div class="meal-day-header">${days[i]}<br><span style="font-size:0.7rem; color:var(--text-muted);">${colDate.getDate()}</span></div>`;
+                
+                ['Breakfast', 'Lunch', 'Dinner'].forEach(type => {
+                    let zone = document.createElement('div');
+                    zone.className = 'drop-zone';
+                    zone.setAttribute('data-meal', type);
+                    zone.setAttribute('data-date', dStr);
+                    zone.ondragover = allowDrop;
+                    zone.ondrop = dropRecipe;
+                    zone.ondragenter = (e) => e.target.classList.add('drag-over');
+                    zone.ondragleave = (e) => e.target.classList.remove('drag-over');
+                    
+                    // Populate existing meals
+                    const dayMeals = meals.filter(m => m.date === dStr && m.mealType === type);
+                    dayMeals.forEach(m => {
+                        let div = document.createElement('div');
+                        div.className = 'planned-meal';
+                        div.innerHTML = `<span title="${m.title}">${m.title}</span> <button class="artifact-btn" style="padding: 2px 6px; font-size: 0.5rem; border: none; color: #fb7185; background:transparent; box-shadow:none;" onclick="removeMeal('${m.id}')">✕</button>`;
+                        zone.appendChild(div);
+                    });
+                    
+                    col.appendChild(zone);
+                });
+                grid.appendChild(col);
+            }
+        }
+        
+        function startCalendarDay(d) {
+            let day = d.getDay();
+            let diff = d.getDate() - day + (day == 0 ? -6 : 1); // Adjust for Monday start
+            return diff;
+        }
+
+        function dragRecipe(ev, id, title) {
+            ev.dataTransfer.setData("id", id);
+            ev.dataTransfer.setData("title", title);
+        }
+        function allowDrop(ev) { ev.preventDefault(); }
+        async function dropRecipe(ev) {
+            ev.preventDefault();
+            ev.currentTarget.classList.remove('drag-over');
+            
+            let rId = ev.dataTransfer.getData("id");
+            let rTitle = ev.dataTransfer.getData("title");
+            if(!rId) return;
+            
+            let date = ev.currentTarget.getAttribute('data-date');
+            let type = ev.currentTarget.getAttribute('data-meal');
+            
+            const newMeal = { id: 'm_' + Date.now(), recipeId: rId, title: rTitle, date: date, mealType: type };
+            await dbPut('meals', newMeal);
+            renderMealCalendar();
+        }
+        async function removeMeal(id) { await dbDelete('meals', id); renderMealCalendar(); }
+
+        // PANTRY & GROCERIES
+        async function loadLists() {
+            const pantry = await dbGetAll('pantry');
+            const groceries = await dbGetAll('groceries');
+            
+            const pList = document.getElementById('pantry-list');
+            pList.innerHTML = pantry.map(p => `
+                <div class="inv-item">
+                    <div class="inv-name">${p.name}</div>
+                    <div style="display:flex; align-items:center; gap: 10px;">
+                        <span class="inv-qty">${p.qty}</span>
+                        <button class="artifact-btn" style="padding: 4px 8px; font-size: 0.6rem; border-color:#fb7185; color:#fb7185;" onclick="removePantry('${p.id}')">✕</button>
+                    </div>
+                </div>
+            `).join('');
+
+            const gList = document.getElementById('grocery-list');
+            gList.innerHTML = groceries.map(g => `
+                <div class="inv-item" style="${g.checked ? 'opacity:0.5;' : ''}">
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <input type="checkbox" style="accent-color:var(--primary); transform:scale(1.2);" ${g.checked ? 'checked' : ''} onchange="toggleGrocery('${g.id}')">
+                        <span class="inv-name" style="${g.checked ? 'text-decoration:line-through;' : ''}">${g.name}</span>
+                    </div>
+                    <button class="artifact-btn" style="padding: 4px 8px; font-size: 0.6rem; border:none; color:#fb7185; box-shadow:none; background:transparent;" onclick="removeGrocery('${g.id}')">✕</button>
+                </div>
+            `).join('');
+        }
+
+        async function addPantryItem() {
+            const name = document.getElementById('new-pantry-item').value.trim();
+            const qty = document.getElementById('new-pantry-qty').value.trim();
+            if(!name) return;
+            await dbPut('pantry', { id: 'p_'+Date.now(), name: name, qty: qty || '1' });
+            document.getElementById('new-pantry-item').value = ''; document.getElementById('new-pantry-qty').value = '';
+            loadLists();
+        }
+        async function removePantry(id) { await dbDelete('pantry', id); loadLists(); }
+
+        async function addGroceryItem() {
+            const name = document.getElementById('new-grocery-item').value.trim();
+            if(!name) return;
+            await dbPut('groceries', { id: 'g_'+Date.now(), name: name, checked: false });
+            document.getElementById('new-grocery-item').value = '';
+            loadLists();
+        }
+        async function toggleGrocery(id) {
+            const g = await dbGet('groceries', id);
+            g.checked = !g.checked; await dbPut('groceries', g); loadLists();
+        }
+        async function removeGrocery(id) { await dbDelete('groceries', id); loadLists(); }
+
+        // === 9. AI SOUS CHEF (Gemini) ===
+        function saveApiKey() {
+            const input = document.getElementById('gemini-key-input'); const btn = document.getElementById('save-key-btn');
+            if(input.value.trim() !== '') { localStorage.setItem('gemini_api_key', input.value.trim()); btn.innerText = "Saved!"; setTimeout(() => { btn.innerText = "Save"; }, 2000); }
+        }
+
+        async function processAISousChef(mode) {
+            const prompt = document.getElementById('ai-prompt').value.trim(); const status = document.getElementById('ai-status');
+            const apiKey = localStorage.getItem('gemini_api_key');
+            
+            if(!apiKey) { status.style.color = '#fb7185'; status.textContent = "API Key missing. Setup in ProTips."; return; }
+            if(!prompt) { status.style.color = '#fb7185'; status.textContent = "Please provide instructions."; return; }
+
+            status.style.color = 'var(--accent)'; status.textContent = "Consulting the Oracle Sous Chef...";
+
+            let systemPrompt = "";
+            if(mode === 'recipe') {
+                systemPrompt = `You are a local-first AI Sous Chef. Extract intent and generate a recipe. Return ONLY a pure JSON object: {"title": "String", "ingredients": "String separated by \\n", "instructions": "String separated by \\n", "tags": ["Array", "of", "strings"], "prepTime": "String", "cookTime": "String"}. Prompt: "${prompt}"`;
+            } else {
+                systemPrompt = `You are a meal planning AI. Create a weekly meal plan based on constraints. Return ONLY a pure JSON array of objects: [{"dateOffset": Integer (0 for today, 1 for tomorrow...), "mealType": "Breakfast"|"Lunch"|"Dinner", "title": "String Recipe Name"}]. Ensure variety. Prompt: "${prompt}"`;
+            }
+
+            try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ contents: [{ parts: [{ text: systemPrompt }] }] })
+                });
+                const data = await response.json();
+                if(data.error) { status.style.color = '#fb7185'; status.textContent = `API Error: ${data.error.message}`; return; }
+                
+                let replyText = data.candidates[0].content.parts[0].text;
+                replyText = replyText.replace(/```json/g, '').replace(/```/g, '').trim();
+                
+                if(mode === 'recipe') {
+                    const r = JSON.parse(replyText);
+                    r.id = 'rec_' + Date.now();
+                    await dbPut('recipes', r);
+                    status.style.color = '#34d399'; status.textContent = "Recipe added to Cookbook!";
+                    loadRecipes();
+                } else {
+                    const plan = JSON.parse(replyText);
+                    for(let m of plan) {
+                        let d = new Date(); d.setDate(d.getDate() + (m.dateOffset || 0));
+                        const newMeal = { id: 'm_' + Date.now() + Math.random(), recipeId: 'ai_gen', title: m.title, date: getFormatDate(d), mealType: m.mealType };
+                        await dbPut('meals', newMeal);
+                    }
+                    status.style.color = '#34d399'; status.textContent = "Meals successfully mapped to Calendar!";
+                    renderMealCalendar();
+                }
+                
+                document.getElementById('ai-prompt').value = '';
+                setTimeout(() => { status.style.color = 'var(--text-muted)'; status.textContent = "Ready to assist."; }, 4000);
+
+            } catch(e) {
+                console.log(e);
+                status.style.color = '#fb7185'; status.textContent = "Parsing Error. Check console or try a clearer prompt.";
+            }
+        }
+
+        // === 10. DATA BACKUP & RESTORE ===
+        function triggerDownload(data, filename) {
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a'); a.href = url; a.download = filename;
+            document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+        }
+
+        function exportVibes() {
+            const vault = JSON.parse(localStorage.getItem('somniaVault')) || [];
+            const activeState = JSON.parse(localStorage.getItem('somnia_active_state')) || {};
+            triggerDownload({ type: "somnia_vibes", vault, activeState }, `scullery_vibes_${getFormatDate(new Date())}.json`);
+        }
+        function importVibes(input) {
+            if (!input.files || !input.files[0]) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.type === "somnia_vibes") {
+                        if (data.vault) { savedVault = data.vault; localStorage.setItem('somniaVault', JSON.stringify(savedVault)); renderVault(); }
+                        if (data.activeState) { localStorage.setItem('somnia_active_state', JSON.stringify(data.activeState)); restoreActiveState(); }
+                        somniaAlert("VIBES RESTORED", "Your digital sanctuary's aesthetic has been injected.");
+                    } else throw new Error();
+                } catch(err) { somniaAlert("IMPORT FAILED", "Invalid Vibes file."); }
+            };
+            reader.readAsText(input.files[0]); input.value = '';
+        }
+
+        async function exportScullery() {
+            const recipes = await dbGetAll('recipes');
+            const meals = await dbGetAll('meals');
+            const pantry = await dbGetAll('pantry');
+            const groceries = await dbGetAll('groceries');
+            triggerDownload({ type: "somnia_scullery", recipes, meals, pantry, groceries }, `scullery_data_${getFormatDate(new Date())}.json`);
+        }
+        function importScullery(input) {
+            if (!input.files || !input.files[0]) return;
+            const reader = new FileReader();
+            reader.onload = async (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+                    if (data.type === "somnia_scullery") {
+                        if (data.recipes) for (let r of data.recipes) await dbPut('recipes', r);
+                        if (data.meals) for (let m of data.meals) await dbPut('meals', m);
+                        if (data.pantry) for (let p of data.pantry) await dbPut('pantry', p);
+                        if (data.groceries) for (let g of data.groceries) await dbPut('groceries', g);
+                        
+                        loadRecipes(); renderMealCalendar(); loadLists();
+                        somniaAlert("ARCHIVES RESTORED", "Recipes and plans successfully injected into the Scullery.");
+                    } else throw new Error();
+                } catch(err) { somniaAlert("IMPORT FAILED", "Invalid Scullery data file."); }
+            };
+            reader.readAsText(input.files[0]); input.value = '';
+        }
+
+        // === BOOT ===
+        document.addEventListener('DOMContentLoaded', async () => {
+            parseUrlState();
+            
+            populateGrid('color-grid', colors, 'color');
+            populateGrid('particle-grid', particlesList, 'particle');
+            populateGrid('glow-grid', glows, 'glow');
+            populateGrid('particle-color-grid', particleColors, 'particleColor');
+            populateGrid('glow-color-grid', glowColors, 'glowColor');
+
+            await loadCustomBackgrounds();
+            await loadCustomAudio();
+            initParticles();
+
+            // Load Scullery Data
+            await loadRecipes();
+            await renderMealCalendar();
+            await loadLists();
+            
+            renderVault(); 
+            setInterval(updateWidgets, 1000); updateWidgets();
+            
+            const keyInput = document.getElementById('gemini-key-input');
+            if(localStorage.getItem('gemini_api_key') && keyInput) {
+                keyInput.value = localStorage.getItem('gemini_api_key');
+            }
+        });
+    </script>
+</body>
+</html>
