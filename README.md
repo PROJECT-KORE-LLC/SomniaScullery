@@ -60,3 +60,41 @@ Because SOMNIASCULLERY uses ES modules (like Service Workers) and IndexedDB, it 
 3. Serve the directory using a local web server. For example, using Python:
 ```bash
    python -m http.server 8000
+4. Open `http://localhost:8000` in your browser.
+
+### Option 2: Install as PWA
+1. Host the files on a secure server (like GitHub Pages, Vercel, or Netlify).
+2. Visit the URL on your phone or desktop browser.
+3. Click the **"Install"** icon in the URL bar (Desktop) or select **"Add to Home Screen"** from your browser menu (Mobile).
+4. Launch SOMNIASCULLERY directly from your home screen, even completely offline.
+
+---
+
+## 🔑 Activating the AI Sous Chef
+
+The AI features use Google's Gemini API directly from your browser. Your key is stored strictly in your browser's `localStorage`.
+
+1. Go to [Google AI Studio](https://aistudio.google.com/) and sign in.
+2. Click **"Get API key"** and generate a new key.
+3. Open SOMNIASCULLERY.
+4. Click **The Scullery** -> **AI Sous Chef & Backup**.
+5. Paste your key into the password field and click **Save**.
+
+*Example Prompt: "I need an 1800 calorie, 150g protein daily meal plan for a family of 4 on a budget. Give me recipes."*
+
+---
+
+## 🛠️ Built With
+
+* **HTML5 / CSS3** - Native custom properties, glassmorphism, flexbox/grid.
+* **Vanilla JavaScript** - Zero frameworks. Pure DOM manipulation.
+* **IndexedDB API** - Robust local storage for blobs, images, and JSON data.
+* **Web Audio API** - For mixing and routing multiple audio stems.
+* **Canvas API** - High-performance custom particle rendering.
+* **WakeLock & Navigator Share APIs** - Deep native OS integration.
+
+---
+
+## 📜 License
+
+This project is open-source and free to use, modify, and distribute. Build your perfect kitchen.
